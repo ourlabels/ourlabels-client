@@ -1,0 +1,121 @@
+.annotation {
+  width: 100%;
+  padding: 15px;
+  cursor: pointer;
+  margin: 3px;
+}
+.selected {
+  width: 100%;
+  padding: 15px;
+  cursor: pointer;
+  margin: 3px;
+  background: black;
+  color: white;
+}
+.top-classification-landscape {
+  height: 5vh;
+  vertical-align: middle;
+  line-height: 5vh;
+  overflow: hidden;
+}
+.bottom-classification-landscape {
+  height: 5vh;
+  line-height: 5vh;
+  vertical-align: middle;
+  overflow: hidden;
+}
+.classifications-scroller-landscape {
+  width: 90%;
+  height: 40vh;
+  margin-right: 15px;
+  overflow-y: scroll;
+}
+.classifications-scroller-portrait {
+  position: relative;
+  width: 60vw;
+  height: 50vh;
+  margin-left: 10px;
+  overflow-y: scroll;
+  margin-right: 5px;
+}
+
+.classifications-holder-portrait {
+  height: 10vh;
+  min-width: 100vw;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+.classifications-holder-landscape {
+  height: 100vh;
+  margin: 0;
+}
+
+.controls-holder-portrait {
+  width: 40vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.controls-holder-landscape {
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.save-portrait {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+.direction-portrait {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+.save-landscape {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+.direction-landscape {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+button.ui.button.save-button-portrait {
+  width: 45%;
+}
+
+button.ui.button.back-button-portrait {
+  width: 45%;
+}
+
+button.ui.button.next-button-portrait {
+  width: 45%;
+}
+
+button.ui.button.copy-button-portrait {
+  width: 45%;
+}
+
+button.ui.button.save-button-landscape {
+  width: 45%;
+}
+
+button.ui.button.back-button-landscape {
+  width: 45%;
+}
+
+button.ui.button.next-button-landscape {
+  width: 45%;
+}
+
+button.ui.button.copy-button-landscape {
+  width: 45%;
+}

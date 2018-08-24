@@ -1,0 +1,30 @@
+@import "../base/_variables.scss";
+
+.home {
+  position: relative;
+  top: 50px;
+  min-height: 100vh;
+  left: 0;
+  top: 2;
+  overflow: scroll; 
+}
+.ui.card {
+  margin: 20px;
+}
+.ui.card > .ui.image {
+  height: 100px;
+  padding: 10px;
+}
+.ui.card > .content.home {
+  background-color: $secondary-bg-color;
+  color: white;
+}
+
+.ui.card > .extra.content {
+  background-color: white;
+  color: black;
+}
+
+.ui.modal {
+  color: black;
+}

@@ -1,0 +1,136 @@
+@import "../base/_variables.scss";
+
+
+.ui.card > .header.header-login {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  color: black;
+  font-family: Poppins;
+  margin: 10px;
+}
+
+.ui.card > div.content.content-login {
+  border-radius: 10px;
+  background-color: $secondary-bg-color;
+}
+
+.login-header {
+  padding: 0px;
+  margin-top: 0px;
+}
+
+.login-holder {
+  position: relative;
+  font-family: $primary-font;
+  width: 100vw;
+  text-align: center;
+  overflow-y: auto;
+}
+.login-logo {
+  margin-top: 20px;
+  width: 18%;
+  max-width: 200px;
+  border-radius: 15%;
+}
+
+.label {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@media only screen and (max-width: 2000px) {
+  .error-label {
+    color: red;
+  }
+  .ui.card.card-login {
+    width: 60vw;
+    margin-left: 20vw;
+    margin-top: 30px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 0px;
+  }  
+  .ui.labeled.input:not([class*="corner labeled"]) .label:first-child+input {
+    width: 80%;
+  }
+  .ui.input {
+    width: 80%;
+    margin-left: 0%; 
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .error-label {
+    color: red;
+  }
+  .ui.card.card-login {
+    width: 60vw;
+    margin-left: 20vw;
+    margin-top: 30px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 0px;
+  }  
+}
+
+@media only screen and (max-width: 760px) {
+  .error-label {
+    color: red;
+  }
+  .ui.card.card-login {
+    width: 70vw;
+    margin-left: 15vw;
+    margin-top: 30px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 0px;
+  }  
+}
+
+@media only screen and (max-width: 600px) {
+}
+@media only screen and (max-width: 500px) {
+  .ui.card.card-login {
+    width: 95vw;
+    margin-left: 2.5vw;
+    margin-top: 30px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 0px;
+  }  
+}
+
+.input-feedback {
+  color: red;
+  margin-top: 0.25rem;
+}
+
+
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  font: small-caption Verdana, sans-serif;
+  color: rgba(255, 100, 100, 0.4);
+}
+::-moz-placeholder {
+  /* Firefox 19+ */
+  font: small-caption Verdana, sans-serif;
+  color: pink;
+}
+:-ms-input-placeholder {
+  /* IE 10+ */
+  font: small-caption Verdana, sans-serif;
+  color: pink;
+}
+:-moz-placeholder {
+  /* Firefox 18- */
+  font: small-caption Verdana, sans-serif;
+  color: pink;
+}
+
+button.button-login {
+  background-color: #4db4d1;
+  color: white;
+  width: 50%;
+}

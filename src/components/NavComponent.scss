@@ -1,0 +1,197 @@
+@import "../base/_variables.scss";
+
+.nav {
+  width: 100vw;
+  height: 60px;
+  position: "fixed";
+  top: 0px;
+  left: 0px;
+  background-color: $secondary-bg-color;
+  border-bottom: 1px solid $secondary-card-bg-color; 
+  height: 70px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.nav-menu {
+  position: flex;
+  flex-direction: column;
+  padding: 0px;
+  margin: 0px;
+  margin-top: 5px;
+}
+
+.bm-burger-button {
+  position: absolute;
+  width: 24px;
+  height: 20px;
+  left: calc(100vw - 48px);
+  top: 25px;
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: #373a47;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: #bdc3c7;
+  position: relative;
+  top: 10px;
+  right: 20px;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background: #373a47;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+  position: relative;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  color: #b8b7ad;
+  padding: 0.8em;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+.nav-spacer {
+  display: inline;
+  padding: 10px 10px 5px 10px;
+  margin-left: 5px;
+  color: black;
+  border: 1px solid clear;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  position: relative;
+  text-decoration: none;
+}
+.active-link {
+  display: inline;
+  padding: 10px 10px 10px 10px;
+  text-decoration: none;
+  color: white;
+  background-color: $primary-card-bg-light-color;
+}
+
+.inactive-link {
+  display: inline;
+  padding: 10px 10px 10px 10px;
+}
+
+.nav-items {
+  display: inline-flex;
+  flex-direction: row;
+  font-family: Poppins;
+  font-weight: 400;
+}
+.nav-logo-holder {
+  vertical-align: baseline;
+  margin-right: 20px;
+  display: inline;
+}
+
+.nav-logo-image {
+  vertical-align: bottom;
+  border-radius: 10px;
+  margin-right: 2px;
+}
+
+.nav-logo-name {
+  vertical-align: bottom;
+  margin-right: 2px;
+}
+
+.nav-logo-small {
+  height: 60px;
+  width: 60px;
+  background-color: green;
+  border-radius: 10px;
+  position: fixed;
+  top: 0px;
+  left: calc(50vw - 30px)
+}
+
+.user-bar-active {
+  margin: 0px;
+  padding: 5px;
+  float: right;
+  min-width: 300px;
+  height: 65px;
+  background-color: $primary-card-bg-light-color;
+  border-radius: 15px;
+}
+
+.user-bar {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  float: right;
+  align-items: baseline;
+  min-width: 300px;
+  height: 70px;
+  background-color: $primary-light-accent-color;
+  border-radius: 15px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1rem;
+  padding: 0px;
+  padding-left: 12px;
+}
+.nav-menu-small {
+  position: relative;
+  width: 60px;
+  padding: 0px;
+  margin: 0px;
+  margin-top: 5px;
+
+}
+.user-avatar {
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  background: rgba(100, 100, 100, 0.75);
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+.user-avatar img {
+  vertical-align: top;
+  margin: 0px;
+  padding-left: 2px;
+}
+
+.username {
+  font-family: $primary-font;
+  font-weight: 600;
+  color: black;
+}
+
+.email {
+  color: rgba(120, 60, 60, 0.7);
+  vertical-align: top;
+}
+
+.score {
+  font-family: $secondary-font;
+  line-height: 40px;
+  color: white;
+}

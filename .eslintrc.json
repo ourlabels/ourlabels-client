@@ -1,0 +1,17 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "settings": {
+    "ecmascript": 6
+  },
+  "rules": {
+    "semi": 2
+  }
+}

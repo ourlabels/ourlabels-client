@@ -1,0 +1,14 @@
+.zoom-holder-landscape {
+  margin-top: 10px;
+}
+.zoom-holder-portrait {
+  margin-top: 0;
+  width: 40vw;
+  margin-bottom: 20px;
+}
+.ui.input.zoom-input-landscape > input {
+  min-width: 27vw;
+}
+h5.ui.header.zoom-title {
+  margin-bottom: 0px;
+}
