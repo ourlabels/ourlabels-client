@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
 import {
   getProjects,
   getProjectAnnotations,
@@ -9,12 +9,13 @@ import {
   joinProject,
   leaveProject,
   getProjectForUpdate,
+  gotProjectForUpdate,
   requestAccessToProject,
-  updateProject
-} from "../../redux-actions/project";
-import { getTypes } from "../../redux-actions/types";
-import { getLabels, addLabels } from "../../redux-actions/labels";
-import ProjectsComponent from "../../components/ProjectsComponent";
+  updateProject,
+} from '../../redux-actions/project';
+import { getTypes } from '../../redux-actions/types';
+import { getLabels, addLabels } from '../../redux-actions/labels';
+import ProjectsComponent from '../../components/ProjectsComponent.jsx';
 
 class ProjectsContainer extends Component {
   constructor(props) {
@@ -27,91 +28,83 @@ class ProjectsContainer extends Component {
     this.props.getLabels();
   }
   render() {
-    const { logged_in, email, score, username } = this.props;
+    const {
+      loggedIn, username,
+      allowed, joined, other, owned, refused, requested,
+      labels, projectForUpdate,
+    } = this.props;
     return (
       <ProjectsComponent
-        key={`project-${this.props.current_project}`}
-        logged_in={logged_in}
-        allowed={this.props.projects_allowed}
-        joined={this.props.projects_joined}
-        other={this.props.projects_other}
-        owned={this.props.projects_owned}
+        loggedIn={loggedIn}
+        allowed={allowed}
+        joined={joined}
+        other={other}
+        owned={owned}
+        refused={refused}
+        requested={requested}
         username={username}
-        labels={this.props.labels}
-        getProjectAnnotations={this.props.getProjectAnnotations}
+        labels={labels}
         addLabels={this.props.addLabels}
         getLabels={this.props.getLabels}
-        refused={this.props.projects_refused}
-        requested={this.props.projects_requested}
-        current_project={this.props.current_project}
         joinProject={this.props.joinProject}
         leaveProject={this.props.leaveProject}
         changeProject={this.props.changeProject}
         getProjectForUpdate={this.props.getProjectForUpdate}
+        gotProjectForUpdate={this.props.gotProjectForUpdate}
         requestAccessToProject={this.props.requestAccessToProject}
-        types={this.props.types}
+        getProjectAnnotations={this.props.getProjectAnnotations}
+        projectTypes={this.props.projectTypes}
         history={this.props.history}
-        projectForUpdate={this.props.project_for_update}
         updateProject={this.props.updateProject}
+        projectForUpdate={projectForUpdate}
+        username={this.props.username}
       />
     );
   }
 }
-const mapStateToProps = state => {
-  let current_project = state.auth.current_project;
-  if (state.project.current_project) {
-    current_project = state.project.current_project;
-  }
-  const { project_for_update } = state.project;
+const mapStateToProps = (state) => {
+  const { projectForUpdate } = state.project;
   const {
     allowed,
     other,
     owned,
     refused,
     requested,
-    joined
+    joined,
   } = state.project.projects;
-  const { types } = state.types;
+  const { projectTypes } = state.types;
   const { labels } = state;
   return {
     labels: labels.labels,
-    logged_in: state.auth.logged_in,
-    signed_up: state.auth.signed_up,
+    loggedIn: state.auth.loggedIn,
+    signedUp: state.auth.signedUp,
     session: state.auth.session,
     email: state.auth.email,
     score: state.auth.score,
-    current_project: current_project,
-    projects_allowed: allowed,
-    projects_other: other,
-    projects_owned: owned,
-    projects_refused: refused,
-    projects_requested: requested,
-    projects_joined: joined,
-    project_for_update,
+    allowed,
+    other,
+    owned,
+    refused,
+    requested,
+    joined,
+    projectForUpdate,
     username: state.auth.username,
-    types
+    projectTypes,
   };
 };
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators(
-    {
-      getProjects,
-      joinProject,
-      leaveProject,
-      getLabels,
-      getProjectForUpdate,
-      getProjectAnnotations,
-      changeProject,
-      requestAccessToProject,
-      updateProject,
-      addLabels,
-      getTypes
-    },
-    dispatch
-  );
-};
-ProjectsContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProjectsContainer);
-export default withRouter(ProjectsContainer);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getProjects,
+  joinProject,
+  leaveProject,
+  getLabels,
+  getProjectForUpdate,
+  gotProjectForUpdate,
+  getProjectAnnotations,
+  changeProject,
+  requestAccessToProject,
+  updateProject,
+  getTypes,
+  addLabels
+}, dispatch);
+ProjectsContainer = connect(mapStateToProps, mapDispatchToProps)(ProjectsContainer);
+export default ProjectsContainer;

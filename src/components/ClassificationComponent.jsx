@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { Card, Image, Icon, Header, Button } from "semantic-ui-react";
-import { Draggable, Droppable, DragDropContext } from "react-beautiful-dnd";
-import ZoomComponent from "./ZoomComponent";
-import TypeComponent from "./TypeComponent";
-import SequenceComponent from "./SequenceComponent";
-import IndexComponent from "./IndexComponent";
-import "./ClassificationComponent.scss";
+import React, { Component } from 'react';
+import { Card, Image, Icon, Header, Button } from 'semantic-ui-react';
+import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd';
+import ZoomComponent from './ZoomComponent.jsx';
+import TypeComponent from './TypeComponent.jsx';
+import SequenceComponent from './SequenceComponent.jsx';
+import IndexComponent from './IndexComponent.jsx';
+import './ClassificationComponent.scss';
 
 class ClassificationComponent extends Component {
   constructor(props) {
@@ -92,16 +92,16 @@ class ClassificationComponent extends Component {
       <div
         className={
           this.props.portrait
-            ? "classifications-holder-portrait"
-            : "classifications-holder-landscape"
+            ? 'classifications-holder-portrait'
+            : 'classifications-holder-landscape'
         }
       >
         <div className="top-classification">{this.state.topContent}</div>
         <div
           className={
             this.props.portrait
-              ? "classifications-scroller-portrait"
-              : "classifications-scroller-landscape"
+              ? 'classifications-scroller-portrait'
+              : 'classifications-scroller-landscape'
           }
           onBlur={this.onScroll}
           onScroll={this.onScroll}
@@ -125,12 +125,12 @@ class ClassificationComponent extends Component {
                     this.props.selectAnnotation(annotation.name);
                   }}
                   className={
-                    index === this.props.selected ? "selected" : "annotation"
+                    index === this.props.selected ? 'selected' : 'annotation'
                   }
                   style={{
                     backgroundColor:
                       index === this.props.selected
-                        ? "black"
+                        ? 'black'
                         : `rgba(${r},${g},${b},${a})`
                   }}
                 >
@@ -140,8 +140,8 @@ class ClassificationComponent extends Component {
             })}
           {!this.props.annotations ||
             (this.props.annotations.length === 0 && (
-              <div className="selected" style={{ backgroundColor: "black" }}>
-                {"No annotations yet"}
+              <div className="selected" style={{ backgroundColor: 'black' }}>
+                {'No annotations yet'}
               </div>
             ))}
         </div>
@@ -149,8 +149,8 @@ class ClassificationComponent extends Component {
         <div
           className={
             this.props.portrait
-              ? "controls-holder-portrait"
-              : "controls-holder-landscape"
+              ? 'controls-holder-portrait'
+              : 'controls-holder-landscape'
           }
         >
           <ZoomComponent
@@ -164,10 +164,10 @@ class ClassificationComponent extends Component {
               key={`type-component-${this.props.selected}`}
               changeType={this.props.changeType}
               portrait={this.props.portrait}
-              type={this.props.annotations[this.props.selected]["type"]}
-              occluded={this.props.annotations[this.props.selected]["occluded"]}
-              difficult={this.props.annotations[this.props.selected]["difficult"]}
-              truncated={this.props.annotations[this.props.selected]["truncated"]}
+              type={this.props.annotations[this.props.selected]['type']}
+              occluded={this.props.annotations[this.props.selected]['occluded']}
+              difficult={this.props.annotations[this.props.selected]['difficult']}
+              truncated={this.props.annotations[this.props.selected]['truncated']}
               labels={this.props.labels}
             />
           )}
@@ -188,13 +188,13 @@ class ClassificationComponent extends Component {
             />
           )}
           <div
-            className={this.props.portrait ? "save-portrait" : "save-landscape"}
+            className={this.props.portrait ? 'save-portrait' : 'save-landscape'}
           >
             <Button
               className={
                 this.props.portrait
-                  ? "save-button-portrait"
-                  : "save-button-landscape"
+                  ? 'save-button-portrait'
+                  : 'save-button-landscape'
               }
               onClick={this.props.save}
               primary
@@ -204,8 +204,8 @@ class ClassificationComponent extends Component {
             <Button
               className={
                 this.props.portrait
-                  ? "copy-button-portrait"
-                  : "copy-button-landscape"
+                  ? 'copy-button-portrait'
+                  : 'copy-button-landscape'
               }
               onClick={this.props.copy}
               secondary
@@ -215,14 +215,14 @@ class ClassificationComponent extends Component {
           </div>
           <div
             className={
-              this.props.portrait ? "direction-portrait" : "direction-landscape"
+              this.props.portrait ? 'direction-portrait' : 'direction-landscape'
             }
           >
             <Button
               className={
                 this.props.portrait
-                  ? "back-button-portrait"
-                  : "back-button-landscape"
+                  ? 'back-button-portrait'
+                  : 'back-button-landscape'
               }
               onClick={this.props.back}
             >
@@ -232,8 +232,8 @@ class ClassificationComponent extends Component {
             <Button
               className={
                 this.props.portrait
-                  ? "next-button-portrait"
-                  : "next-button-landscape"
+                  ? 'next-button-portrait'
+                  : 'next-button-landscape'
               }
               onClick={this.props.next}
             >

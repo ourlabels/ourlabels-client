@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { Segment, Image, Input, Header } from "semantic-ui-react";
-import "./ZoomComponent.scss";
+import React, { Component } from 'react';
+import { Segment, Image, Input, Header } from 'semantic-ui-react';
+import './ZoomComponent.scss';
 
 class ZoomComponent extends Component {
   constructor(props) {
@@ -11,15 +11,15 @@ class ZoomComponent extends Component {
     return (
       <div
         className={
-          this.props.portrait ? "zoom-holder-portrait" : "zoom-holder-landscape"
+          this.props.portrait ? 'zoom-holder-portrait' : 'zoom-holder-landscape'
         }
       >
         <Header as="h5" className="zoom-title">Zoom level</Header>
         <Input
           className={
             this.props.portrait
-              ? "zoom-input-portrait"
-              : "zoom-input-landscape"
+              ? 'zoom-input-portrait'
+              : 'zoom-input-landscape'
           }
           type="number"
           step="0.1"

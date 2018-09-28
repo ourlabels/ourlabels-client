@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Dropdown, Checkbox, Header } from "semantic-ui-react";
-import ReactTooltip from "react-tooltip";
-import "./TypeComponent.scss";
+import React, { Component } from 'react';
+import { Dropdown, Checkbox, Header } from 'semantic-ui-react';
+import ReactTooltip from 'react-tooltip';
+import './TypeComponent.scss';
 
 class TypeComponent extends Component {
   constructor(props) {
@@ -12,16 +12,16 @@ class TypeComponent extends Component {
     this.changeTruncated = this.changeTruncated.bind(this);
   }
   changeType(value) {
-    this.props.changeType(value, "type");
+    this.props.changeType(value, 'type');
   }
   changeDifficult(value) {
-    this.props.changeType(value, "difficult");
+    this.props.changeType(value, 'difficult');
   }
   changeOccluded(value) {
-    this.props.changeType(value, "occluded");
+    this.props.changeType(value, 'occluded');
   }
   changeTruncated(value) {
-    this.props.changeType(value, "truncated");
+    this.props.changeType(value, 'truncated');
   }
 
   render() {
@@ -36,7 +36,7 @@ class TypeComponent extends Component {
     return (
       <div
         className={
-          this.props.portrait ? "type-holder-portrait" : "type-holder-landscape"
+          this.props.portrait ? 'type-holder-portrait' : 'type-holder-landscape'
         }
       >
         <Header as="h5" className="type-title">
@@ -52,21 +52,20 @@ class TypeComponent extends Component {
             this.changeType(val.value);
           }}
         />
-        {"O"}
+        {'O'}
         <Checkbox
-          data-for={"occluded"}
+          data-for={'occluded'}
           data-tip="is occluded, covered but entirely in image"
           data-iscapture="true"
           defaultChecked={occluded}
           onChange={(tag, val) => {
-            console.log(val);
             this.changeOccluded(val.checked);
           }}
         />
         <ReactTooltip id="occluded" place="bottom" type="dark" />
-        {"T"}
+        {'T'}
         <Checkbox
-          data-for={"truncated"}
+          data-for={'truncated'}
           data-tip="is truncated, off the edge of the image"
           data-iscapture="true"
           defaultChecked={truncated}
@@ -75,9 +74,9 @@ class TypeComponent extends Component {
           }}
         />
         <ReactTooltip id="truncated" place="bottom" type="dark" />
-        {"D"}
+        {'D'}
         <Checkbox
-          data-for={"difficult"}
+          data-for={'difficult'}
           data-tip="is difficult to determine"
           data-iscapture="true"
           defaultChecked={difficult}

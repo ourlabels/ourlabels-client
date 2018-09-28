@@ -1,0 +1,137 @@
+@import "../base/_variables.scss";
+.project-settings-container {
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+    align-items: flex-start;
+}
+.project-settings-segment {
+    position: relative;
+}
+.project-settings-holder {
+    position: relative;
+    margin-top: 20px;
+    height: 80vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 10px;
+}
+.ui.segment:first-child {
+    margin-top: 20px;
+}
+.requested-items {
+    background-color: white;
+    width: 100%;
+}
+
+.requested-item {
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    margin: 5px;
+}
+
+.allowed-items {
+    width: 100%;
+    background-color: gray;
+}
+
+.allowed-item {
+    background-color: green;
+    color: white;
+    padding: 10px;
+    margin: 5px;
+}
+
+.refused-items {
+    width: 100%;
+    background-color: gray;
+}
+
+.refused-item {
+    background-color: red;
+    color: white;
+    padding: 10px;
+    margin: 5px;
+}
+
+.ui.form .fields>.field:first-child {
+    width: 100%;
+}
+
+.dropzone {
+    position: relative;
+    border-radius: 20px;
+    min-height: 100px;
+}
+
+.enabled-dropzone {}
+
+.disabled-dropzone {
+    padding: 20px;
+}
+
+.dropzone-text {
+    text-align: center;
+    padding: 20px;
+    background: radial-gradient(ellipse at top, rgb(50, 50, 205), transparent), radial-gradient(ellipse at bottom, rgb(50, 50, 205), transparent);
+    border-radius: 20px;
+    color: white;
+}
+
+.dropzone-files {
+    text-align: center;
+    padding: 10px;
+}
+
+@media only screen and (min-width: 700px) {
+    .requested-items-drag-drop {
+        background-color: clear;
+        width: 32%;
+        margin-right: 1%;
+    }
+    .allowed-items-drag-drop {
+        background-color: clear;
+        width: 32%;
+        margin-right: 1%;
+    }
+    .refused-items-drag-drop {
+        background-color: clear;
+        width: 32%;
+        margin-right: 1%;
+    }
+    .ui.form .fields.drag-drop-context {
+        display: flex;
+        flex-direction: row;
+    }
+    .scroll-indicators {
+        display: flex;
+        flex-direction: column;
+        padding-top: 20px;
+    }
+}
+
+@media only screen and (max-width: 699px) {
+    .requested-items-drag-drop {
+        background-color: clear;
+        width: 99%;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .allowed-items-drag-drop {
+        background-color: clear;
+        width: 99%;
+        margin-bottom: 20px;
+    }
+    .refused-items-drag-drop {
+        background-color: clear;
+        width: 99%;
+    }
+    .ui.form .fields.drag-drop-context {
+        display: flex;
+        flex-direction: row;
+    }
+    .scroll-indicators {
+        display: none;
+    }
+}

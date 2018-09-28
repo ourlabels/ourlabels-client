@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { Modal } from "semantic-ui-react";
-import ReactLoading from "react-loading";
-import ImageComponent from "../../components/ImageComponent.jsx";
-import ClassificationComponent from "../../components/ClassificationComponent.jsx";
-import { getImage, updateIndex } from "../../redux-actions/image";
-import { getLabels } from "../../redux-actions/labels";
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Modal } from 'semantic-ui-react';
+import ReactLoading from 'react-loading';
+import ImageComponent from '../../components/ImageComponent.jsx';
+import ClassificationComponent from '../../components/ClassificationComponent.jsx';
+import { getImage, updateIndex } from '../../redux-actions/image';
+import { getLabels } from '../../redux-actions/labels';
 import {
   getAnnotations,
   postAnnotations
-} from "../../redux-actions/annotations";
-import { getSequences, changeSequence } from "../../redux-actions/sequence";
-import { bindActionCreators } from "redux";
-import "./Annotate.scss";
+} from '../../redux-actions/annotations';
+import { getSequences, changeSequence } from '../../redux-actions/sequence';
+import { bindActionCreators } from 'redux';
+import './Annotate.scss';
 
 class AnnotateContainer extends Component {
   constructor(props) {
@@ -28,6 +28,17 @@ class AnnotateContainer extends Component {
       imageComponent: null,
       reset: true
     };
+    this.reset = true;
+    this.resetAnnotations = true;
+    this.resetImage = true;
+    this.unchanged = true;
+    this.annotations = [];
+    this.imageid = null;
+    this.oldimageid = null;
+    this.image = null;
+    this.selected = 0;
+    this.counter = 0;
+
     this.addAnnotation = this.addAnnotation.bind(this);
     this.updateDims = this.updateDims.bind(this);
     this.changeType = this.changeType.bind(this);
@@ -47,7 +58,7 @@ class AnnotateContainer extends Component {
     // name is LabelBox id
     let annotations = this.annotations.slice(0);
     annotations.push({
-      name: annotations.length > 0 ? `${parseInt(annotations[annotations.length - 1].name) + 1}` : `0`,
+      name: annotations.length > 0 ? `${parseInt(annotations[annotations.length - 1].name) + 1}` : '0',
       x,
       y,
       w,
@@ -62,12 +73,10 @@ class AnnotateContainer extends Component {
     this.annotations = annotations;
     this.forceUpdate();
   }
-  changeType(newType, type = "type") {
+  changeType(newType, type = 'type') {
     // just type of a box
-    console.log("changing type", newType, type);
     let annotations = this.annotations.slice(0);
     annotations[this.selected][type] = newType;
-    console.log(annotations);
     this.annotations = annotations;
     this.unchanged = false;
     this.forceUpdate();
@@ -113,10 +122,6 @@ class AnnotateContainer extends Component {
     }
   }
 
-  reset = true;
-  resetAnnotations = true;
-  resetImage = true;
-  unchanged = true;
   componentWillReceiveProps(newProps) {
     if (newProps.annotations && this.unchanged) {
       let i = 0;
@@ -186,11 +191,11 @@ class AnnotateContainer extends Component {
     this.props.getLabels();
     this.loadImage();
     this.windowResize();
-    window.addEventListener("resize", this.windowResize);
-    window.addEventListener("keydown", this.keyDown);
+    window.addEventListener('resize', this.windowResize);
+    window.addEventListener('keydown', this.keyDown);
   }
   keyDown(keydownevent) {
-    if (keydownevent.key === "X" || keydownevent.key === "x") {
+    if (keydownevent.key === 'X' || keydownevent.key === 'x') {
       this.annotations.splice(this.selected, 1);
       this.selected = 0;
       this.unchanged = false;
@@ -205,12 +210,6 @@ class AnnotateContainer extends Component {
     const offset = 0;
     this.props.getImage(this.updatePage);
   }
-  annotations = [];
-  imageid = null;
-  oldimageid = null;
-  image = null;
-  selected = 0;
-  counter = 0;
   updatePage() {
     this.setState({ showLoading: false });
   }
@@ -258,15 +257,15 @@ class AnnotateContainer extends Component {
       <div
         className={
           window.innerWidth > window.innerHeight
-            ? "image-classifications-holder-landscape"
-            : "image-classifications-holder-portrait"
+            ? 'image-classifications-holder-landscape'
+            : 'image-classifications-holder-portrait'
         }
       >
         <div
           className={
             window.innerWidth > window.innerHeight
-              ? "image-holder-landscape"
-              : "image-holder-portrait"
+              ? 'image-holder-landscape'
+              : 'image-holder-portrait'
           }
         >
           <Modal
@@ -280,28 +279,36 @@ class AnnotateContainer extends Component {
               <ReactLoading type="spin" color="#0000ff" />
             </Modal.Content>
           </Modal>
-          <ImageComponent
-            key={`image-${this.imageid}`}
-            image={this.image}
-            annotations={this.annotations}
-            imageid={this.imageid}
-            image_index = {this.props.image_index}
-            annotation_index = {this.props.annotation_index}
-            imageWidth={this.state.imageWidth}
-            imageHeight={this.state.imageHeight}
-            updateDims={this.updateDims}
-            addAnnotation={this.addAnnotation}
-            selectAnnotation={this.selectAnnotation}
-            selected={this.selected}
-            labels={this.props.labels}
-            zoom={this.state.zoom}
-          />
+          {this.image && (
+            <ImageComponent
+              key={`image-${this.imageid}`}
+              image={this.image}
+              annotations={this.annotations}
+              imageid={this.imageid}
+              image_index={this.props.image_index}
+              annotation_index={this.props.annotation_index}
+              imageWidth={this.state.imageWidth}
+              imageHeight={this.state.imageHeight}
+              updateDims={this.updateDims}
+              addAnnotation={this.addAnnotation}
+              selectAnnotation={this.selectAnnotation}
+              selected={this.selected}
+              labels={this.props.labels}
+              zoom={this.state.zoom}
+            />)
+          }
+          {this.image == null && (
+            <div>
+                No more images
+            </div>
+          )
+          }
         </div>
         <div
           className={
             window.innerWidth > window.innerHeight
-              ? "classifications-holder-landscape"
-              : "classifications-holder-portrait"
+              ? 'classifications-holder-landscape'
+              : 'classifications-holder-portrait'
           }
         >
           <ClassificationComponent
@@ -332,12 +339,12 @@ class AnnotateContainer extends Component {
 }
 const mapStateToProps = state => {
   const { auth, annotations, labels, image, sequence } = state;
-  if (typeof annotations.callback === "function") {
+  if (typeof annotations.callback === 'function') {
     annotations.callback(annotations.annotations);
   }
   return {
     annotations: annotations.annotations,
-    logged_in: auth.logged_in,
+    loggedIn: auth.loggedIn,
     sequences: sequence.sequences,
     labels: labels.labels,
     image: image.image,
@@ -364,8 +371,7 @@ const mapDispatchToProps = dispatch => {
     dispatch
   );
 };
-AnnotateContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AnnotateContainer);
-export default withRouter(AnnotateContainer);

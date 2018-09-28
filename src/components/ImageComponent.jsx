@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Card, Image, Icon, Modal, Header } from "semantic-ui-react";
-import { Stage, Layer, Rect } from "react-konva";
-import "./ImageComponent.scss";
-import LabelBox from "./LabelBox";
-import Img from "./Img";
+import React, { Component } from 'react';
+import { Card, Image, Icon, Modal, Header } from 'semantic-ui-react';
+import { Stage, Layer, Rect } from 'react-konva';
+import './ImageComponent.scss';
+import LabelBox from './LabelBox.jsx';
+import Img from './Img.jsx';
 
 class ImageComponent extends Component {
   constructor(props) {
@@ -12,6 +12,7 @@ class ImageComponent extends Component {
       updated: false,
       annotations: []
     };
+    this.stageRef = null;
     this.gotImageSize = this.gotImageSize.bind(this);
     this.updateDims = this.updateDims.bind(this);
     this.selfSelect = this.selfSelect.bind(this);
@@ -62,8 +63,6 @@ class ImageComponent extends Component {
   selfSelect(name) {
     this.props.selectAnnotation(name);
   }
-  stageRef = null;
-
   render() {
     let selected = this.props.annotations[this.props.selected];
     if (this.props.image) {

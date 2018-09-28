@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Segment,
   Image,
@@ -6,8 +6,8 @@ import {
   Dropdown,
   Button,
   Header
-} from "semantic-ui-react";
-import "./SequenceComponent.scss";
+} from 'semantic-ui-react';
+import './SequenceComponent.scss';
 
 class SequenceComponent extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class SequenceComponent extends Component {
     return (
       <div
         className={
-          this.props.portrait ? "sequence-holder-portrait" : "sequence-holder-landscape"
+          this.props.portrait ? 'sequence-holder-portrait' : 'sequence-holder-landscape'
         }
       >
         <Header as="h5" className="sequence-title">Choose Sequence</Header>

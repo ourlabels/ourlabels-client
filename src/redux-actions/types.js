@@ -1,10 +1,10 @@
-import request from "superagent";
-let HOSTNAME = "https://ourlabels.org";
-if (process.env.NODE_ENV === "development") {
-  HOSTNAME = "http://localhost:59003";
+import request from 'superagent';
+let HOSTNAME = 'https://ourlabels.org';
+if (process.env.NODE_ENV === 'development') {
+  HOSTNAME = 'http://localhost:59003';
 }
 
-export const GOT_TYPES = "GOT_TYPES";
+export const GOT_TYPES = 'GOT_TYPES';
 
 export const getTypes = () => dispatch => {
   return request

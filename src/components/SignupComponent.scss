@@ -25,9 +25,7 @@
 .signup-holder {
   position: relative;
   font-family: $primary-font;
-  min-width: 100vw;
   top: 10px;
-  min-height: 100vh;
   margin: 0px;
   padding: 0px;
   text-align: center;
@@ -49,7 +47,6 @@
   }
   .ui.card.card-signup {
     width: 60vw;
-    min-height: 100vh;
     margin-left: 20vw;
     margin-top: 30px;
     border: 1px solid lightgray;
@@ -88,7 +85,6 @@
     width: 70vw;
     margin-left: 15vw;
     margin-top: 30px;
-    min-height: 200vh;
     border: 1px solid lightgray;
     border-radius: 5px;
     padding: 0px;

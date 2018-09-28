@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Segment,
   Image,
@@ -6,8 +6,8 @@ import {
   Dropdown,
   Button,
   Header
-} from "semantic-ui-react";
-import "./IndexComponent.scss";
+} from 'semantic-ui-react';
+import './IndexComponent.scss';
 
 class IndexComponent extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class IndexComponent extends Component {
     return (
       <div
         className={
-          this.props.portrait ? "index-holder-portrait" : "index-holder-landscape"
+          this.props.portrait ? 'index-holder-portrait' : 'index-holder-landscape'
         }
       >
         <Header as="h5" className="index-title">Choose Index</Header>

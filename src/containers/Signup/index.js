@@ -1,22 +1,22 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import SignupComponent from "../../components/SignupComponent";
-import { signUp } from "../../redux-actions/auth";
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import SignupComponent from '../../components/SignupComponent.jsx';
+import { signUp } from '../../redux-actions/auth';
 
 class SignupContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
-      email: ""
+      username: '',
+      password: '',
+      email: ''
     };
   }
   componentWillReceiveProps(newProps) {
     if (newProps.signed_up) {
-      newProps.history.push("/login");
+      newProps.history.push('/login');
     }
   }
   render() {
@@ -25,8 +25,8 @@ class SignupContainer extends Component {
 }
 const mapStateToProps = state => {
   return {
-    logged_in: state.auth.logged_in,
-    signed_up: state.auth.signed_up,
+    loggedIn: state.auth.loggedIn,
+    signedUp: state.auth.signedUp,
     session: state.auth.session,
     email: state.auth.email,
     score: state.auth.score,
@@ -44,5 +44,4 @@ const mapDispatchToProps = dispatch => {
     dispatch
   );
 };
-SignupContainer = connect(mapStateToProps, mapDispatchToProps)(SignupContainer);
-export default withRouter(SignupContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(SignupContainer);

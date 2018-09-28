@@ -1,10 +1,10 @@
 //https://gist.github.com/andrewluetgers/7c4a90cbe6341c401d0b7975a8ceeedb
-import React, { Component } from "react";
-import { Image } from "react-konva";
-import broken from "../assets/broken.svg";
+import React, { Component } from 'react';
+import { Image } from 'react-konva';
+import broken from '../assets/broken.svg';
 
 var imgCache = {
-  brokenImage: document.createElement("img")
+  brokenImage: document.createElement('img')
 };
 
 var brokenImage = imgCache.brokenImage;
@@ -25,13 +25,13 @@ class Img extends Component {
 
   loadImg(src) {
     if (!src) {
-      throw new Error("Expected image src instead saw " + typeof src);
+      throw new Error('Expected image src instead saw ' + typeof src);
     }
 
     var img = imgCache[src];
 
     if (!img) {
-      img = imgCache[src] = document.createElement("img");
+      img = imgCache[src] = document.createElement('img');
       img.loadFns = [];
       img.errorFns = [];
       img.onerror = function() {
@@ -39,9 +39,9 @@ class Img extends Component {
         img.errorFns.forEach(fn => fn.call(img));
       };
       img.onload = function() {
-        var hasNH = "naturalHeight" in img,
-          w = hasNH ? "naturalWidth" : "width",
-          h = hasNH ? "naturalHeight" : "height",
+        var hasNH = 'naturalHeight' in img,
+          w = hasNH ? 'naturalWidth' : 'width',
+          h = hasNH ? 'naturalHeight' : 'height',
           invalidImg = img[w] + img[h] === 0;
 
         if (invalidImg) {
@@ -75,13 +75,13 @@ class Img extends Component {
     }
   }
 
-  fillRect = (p, c) => {
+  fillRect(p, c) {
     return c.width / c.height < p.width / p.height
       ? { width: p.width, height: c.height * (p.width / c.width) }
       : { height: p.height, width: c.width * (p.height / c.height) };
   };
 
-  fitRect = (p, c) => {
+  fitRect(p, c) {
     let val =
       c.width / c.height > p.width / p.height
         ? { width: p.width, height: c.height * (p.width / c.width) }
@@ -91,23 +91,23 @@ class Img extends Component {
     return val;
   };
 
-  getDims = (space, parent, child) => {
+  getDims(space, parent, child) {
     switch (space) {
-      case "fill":
-        return this.fillRect(parent, child);
-        break;
-      case "fit":
-      default:
-        return this.fitRect(parent, child);
-        break;
+    case 'fill':
+      return this.fillRect(parent, child);
+      break;
+    case 'fit':
+    default:
+      return this.fitRect(parent, child);
+      break;
     }
   };
 
-  componentWillMount = () => {
+  componentWillMount() {
     this.loadImg(this.props.src);
   };
 
-  render = () => {
+  render() {
     var selfDims = { width: this.props.width, height: this.props.height },
       image = this.state.image,
       imageDims = image

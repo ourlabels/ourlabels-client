@@ -1,0 +1,13 @@
+@import "../base/_variables.scss";
+
+.icon-div {
+    display: inline;
+    padding: 0 5px 0px 10px;
+    font-weight: bolder;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+i.large.icons .ui.container {
+    display: inline;
+}

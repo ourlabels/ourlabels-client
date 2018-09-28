@@ -1,13 +1,13 @@
-import request from "superagent";
-import { getImage } from "./image";
-import { getAnnotations } from "./annotations";
-let HOSTNAME = "https://ourlabels.org";
-if (process.env.NODE_ENV === "development") {
-  HOSTNAME = "http://localhost:59003";
+import request from 'superagent';
+import { getImage } from './image';
+import { getAnnotations } from './annotations';
+let HOSTNAME = 'https://ourlabels.org';
+if (process.env.NODE_ENV === 'development') {
+  HOSTNAME = 'http://localhost:59003';
 }
 
-export const GOT_SEQUENCES = "GOT_SEQUENCES";
-export const NEW_SEQUENCE = "NEW_SEQUENCE";
+export const GOT_SEQUENCES = 'GOT_SEQUENCES';
+export const NEW_SEQUENCE = 'NEW_SEQUENCE';
 
 // because thunks allow functions which resolve
 export const getSequences = () => dispatch => {
