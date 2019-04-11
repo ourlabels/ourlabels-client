@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { withRouter } from "react-router-dom";
 import {
   getProjects,
   getProjectAnnotations,
@@ -11,11 +11,11 @@ import {
   getProjectForUpdate,
   gotProjectForUpdate,
   requestAccessToProject,
-  updateProject,
-} from '../../redux-actions/project';
-import { getTypes } from '../../redux-actions/types';
-import { getLabels, addLabels } from '../../redux-actions/labels';
-import ProjectsComponent from '../../components/ProjectsComponent.jsx';
+  updateProject
+} from "../../redux-actions/project";
+import { getTypes } from "../../redux-actions/types";
+import { getLabels, addLabels } from "../../redux-actions/labels";
+import ProjectsComponent from "../../components/ProjectsComponent.jsx";
 
 class ProjectsContainer extends Component {
   constructor(props) {
@@ -29,9 +29,16 @@ class ProjectsContainer extends Component {
   }
   render() {
     const {
-      loggedIn, username,
-      allowed, joined, other, owned, refused, requested,
-      labels, projectForUpdate,
+      loggedIn,
+      username,
+      allowed,
+      joined,
+      other,
+      owned,
+      refused,
+      requested,
+      labels,
+      projectForUpdate
     } = this.props;
     return (
       <ProjectsComponent
@@ -62,7 +69,7 @@ class ProjectsContainer extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { projectForUpdate } = state.project;
   const {
     allowed,
@@ -70,7 +77,7 @@ const mapStateToProps = (state) => {
     owned,
     refused,
     requested,
-    joined,
+    joined
   } = state.project.projects;
   const { projectTypes } = state.types;
   const { labels } = state;
@@ -89,22 +96,29 @@ const mapStateToProps = (state) => {
     joined,
     projectForUpdate,
     username: state.auth.username,
-    projectTypes,
+    projectTypes
   };
 };
-const mapDispatchToProps = dispatch => bindActionCreators({
-  getProjects,
-  joinProject,
-  leaveProject,
-  getLabels,
-  getProjectForUpdate,
-  gotProjectForUpdate,
-  getProjectAnnotations,
-  changeProject,
-  requestAccessToProject,
-  updateProject,
-  getTypes,
-  addLabels
-}, dispatch);
-ProjectsContainer = connect(mapStateToProps, mapDispatchToProps)(ProjectsContainer);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getProjects,
+      joinProject,
+      leaveProject,
+      getLabels,
+      getProjectForUpdate,
+      gotProjectForUpdate,
+      getProjectAnnotations,
+      changeProject,
+      requestAccessToProject,
+      updateProject,
+      getTypes,
+      addLabels
+    },
+    dispatch
+  );
+ProjectsContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProjectsContainer);
 export default ProjectsContainer;

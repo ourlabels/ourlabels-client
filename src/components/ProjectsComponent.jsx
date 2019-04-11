@@ -1,38 +1,38 @@
-import React from 'react';
-import { Container, Header, Modal } from 'semantic-ui-react';
-import { css } from 'react-emotion';
-import { RingLoader } from 'react-spinners';
-import ProjectsCardsComponent from './ProjectsCardsComponent.jsx';
-import ProjectsFilterComponent from './ProjectsFilterComponent.jsx';
-import ProjectsLabelsComponent from './ProjectsLabelsComponent.jsx';
-import ProjectsSettingsComponent from './ProjectsSettingsComponent.jsx';
+import React from "react";
+import { Container, Header, Modal } from "semantic-ui-react";
+import { css } from "react-emotion";
+import { RingLoader } from "react-spinners";
+import ProjectsCardsComponent from "./ProjectsCardsComponent.jsx";
+import ProjectsFilterComponent from "./ProjectsFilterComponent.jsx";
+import ProjectsLabelsComponent from "./ProjectsLabelsComponent.jsx";
+import ProjectsSettingsComponent from "./ProjectsSettingsComponent.jsx";
 
 const override = css`
-    display: block;
-    margin: 0 auto;
-    border-color: red;
-    background-color: white;
-    z-index: 100;
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+  background-color: white;
+  z-index: 100;
 `;
 
 class ProjectsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filter: '',
+      filter: "",
       project_for_update: null,
       cardsToDisplay: {
         owned: [],
         allowed: [],
         refused: [],
         requested: [],
-        other: [],
+        other: []
       },
       showLoading: false,
       showProjects: true,
       showLabels: false,
       showColorPicker: false,
-      showSettings: false,
+      showSettings: false
     };
     this.filter = this.filter.bind(this);
     this.showLabels = this.showLabels.bind(this);
@@ -65,11 +65,21 @@ class ProjectsComponent extends React.Component {
 
   // handle what happens when we receive a project to edit
   componentWillReceiveProps(nextProps) {
-    console.log(this.state, nextProps, 'State and props ProjectsComponent');
+    console.log(this.state, nextProps, "State and props ProjectsComponent");
     if (nextProps.projectForUpdate != null && !this.state.showSettings) {
-      this.setState({ projectForUpdate: nextProps.projectForUpdate, showSettings: true, showProjects: false, showLoading: false });
+      this.setState({
+        projectForUpdate: nextProps.projectForUpdate,
+        showSettings: true,
+        showProjects: false,
+        showLoading: false
+      });
     } else if (nextProps.projectForUpdate == null && this.state.showSettings) {
-      this.setState({ projectForUpdate: null, showSettings: false, showProjects: true, showLoading: false });
+      this.setState({
+        projectForUpdate: null,
+        showSettings: false,
+        showProjects: true,
+        showLoading: false
+      });
     }
   }
 
@@ -77,7 +87,6 @@ class ProjectsComponent extends React.Component {
   saveProjectLabels(newLabels) {
     const projectForUpdate = this.state;
   }
-
 
   render() {
     const {
@@ -89,7 +98,7 @@ class ProjectsComponent extends React.Component {
       labels,
       projectForUpdate
     } = this.props;
-    console.log(this.props, this.state, 'PROJECT COMPONENT PROPS');
+    console.log(this.props, this.state, "PROJECT COMPONENT PROPS");
     return (
       <Container>
         <Modal open={this.state.showLoading} size="tiny">
@@ -97,8 +106,8 @@ class ProjectsComponent extends React.Component {
           <Modal.Content>
             <RingLoader
               className={override}
-              sizeUnit={'px'}
-              color={'#123abc'}
+              sizeUnit={"px"}
+              color={"#123abc"}
               loading={this.state.showLoading}
             />
           </Modal.Content>
@@ -106,8 +115,8 @@ class ProjectsComponent extends React.Component {
         {this.state.showProjects && (
           <Container>
             <Header as="h1">Projects</Header>
-            {
-              ['owned', 'requested', 'allowed', 'refused', 'other'].map((projectType) => {
+            {["owned", "requested", "allowed", "refused", "other"].map(
+              projectType => {
                 return (
                   <ProjectsCardsComponent
                     key={projectType}
@@ -122,9 +131,10 @@ class ProjectsComponent extends React.Component {
                     getProjectAnnotations={this.props.getProjectAnnotations}
                     leaveProject={this.props.leaveProject}
                     showLabels={this.showLabels}
-                  />);
-              })
-            }
+                  />
+                );
+              }
+            )}
           </Container>
         )}
         {this.state.showSettings && (

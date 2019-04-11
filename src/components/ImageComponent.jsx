@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Card, Image, Icon, Modal, Header } from 'semantic-ui-react';
-import { Stage, Layer, Rect } from 'react-konva';
-import './ImageComponent.scss';
-import LabelBox from './LabelBox.jsx';
-import Img from './Img.jsx';
+import React, { Component } from "react";
+import { Card, Image, Icon, Modal, Header } from "semantic-ui-react";
+import { Stage, Layer, Rect } from "react-konva";
+import "./ImageComponent.scss";
+import LabelBox from "./LabelBox.jsx";
+import Img from "./Img.jsx";
 
 class ImageComponent extends Component {
   constructor(props) {

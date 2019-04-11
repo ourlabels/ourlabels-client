@@ -1,23 +1,22 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import LoginComponent from '../../components/LoginComponent.jsx';
-import { logIn } from '../../redux-actions/auth';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import LoginComponent from "../../components/LoginComponent.jsx";
+import { logIn } from "../../redux-actions/auth";
 
 class LoginContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: ''
+      username: "",
+      password: ""
     };
   }
-  componentWillMount() {
-  }
+  componentWillMount() {}
   componentWillReceiveProps(newProps) {
     if (newProps.loggedIn) {
-      newProps.history.push('/');
+      newProps.history.push("/");
     }
   }
   render() {
@@ -45,5 +44,8 @@ const mapDispatchToProps = dispatch => {
     dispatch
   );
 };
-LoginContainer = connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
+LoginContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginContainer);
 export default LoginContainer;

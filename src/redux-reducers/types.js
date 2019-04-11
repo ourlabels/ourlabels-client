@@ -1,8 +1,8 @@
-import { isNull } from 'util';
-import { GOT_TYPES } from '../redux-actions/types';
+import { isNull } from "util";
+import { GOT_TYPES } from "../redux-actions/types";
 
 const currentTypesState = {
-  projectTypes: {},
+  projectTypes: {}
 };
 
 export default function types(state = currentTypesState, action) {
@@ -12,13 +12,13 @@ export default function types(state = currentTypesState, action) {
   switch (action.type) {
   case GOT_TYPES: {
     const { projectTypes } = action.types;
-    console.log('PROJECT TYPES:', action);
+    console.log("PROJECT TYPES:", action);
     const accumulator = {};
-    projectTypes.forEach((type) => {
+    projectTypes.forEach(type => {
       accumulator[type.id] = { name: type.type, video: type.video };
     });
     return Object.assign({}, state, {
-      projectTypes: accumulator,
+      projectTypes: accumulator
     });
   }
   default:

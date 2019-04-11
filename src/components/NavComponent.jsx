@@ -1,34 +1,32 @@
-import React, { Component } from 'react';
-import { Segment, Image } from 'semantic-ui-react';
-import { elastic as Menu } from 'react-burger-menu';
-import logo from '../assets/logo.png';
-import ourlabels from '../assets/ourlabels.png';
-import { Link } from 'react-router-dom';
-import './NavComponent.scss';
+import React, { Component } from "react";
+import { Segment, Image } from "semantic-ui-react";
+import { elastic as Menu } from "react-burger-menu";
+import logo from "../assets/logo.png";
+import ourlabels from "../assets/ourlabels.png";
+import { Link } from "react-router-dom";
+import "./NavComponent.scss";
 
 class NavComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       width: window.innerWidth,
-      menuOpen: false,
+      menuOpen: false
     };
     this.resize = this.resize.bind(this);
     this.onMouseOver = this.onMouseOver.bind(this);
     this.onMouseOut = this.onMouseOut.bind(this);
     this.closeMenuAndReleaseLabels = this.closeMenuAndReleaseLabels.bind(this);
   }
-  onMouseOut(evt) { }
-  onMouseOver(evt, value) {
-  }
+  onMouseOut(evt) {}
+  onMouseOver(evt, value) {}
   componentWillMount() {
     this.resize();
   }
   componentDidMount() {
-    window.addEventListener('resize', this.resize);
+    window.addEventListener("resize", this.resize);
   }
-  componentWillReceiveProps(nextProps) {
-  }
+  componentWillReceiveProps(nextProps) {}
   resize() {
     this.setState({ width: window.innerWidth });
   }
@@ -44,7 +42,7 @@ class NavComponent extends Component {
           key={`${window.location.hash}-${items[key]}`}
           to={`${items[key]}`}
           key={key}
-          className={location === items[key] ? 'active-link' : 'inactive-link'}
+          className={location === items[key] ? "active-link" : "inactive-link"}
         >
           {key}
         </Link>
@@ -55,8 +53,8 @@ class NavComponent extends Component {
       for (let link of links) {
         new_links.push(link);
         new_links.push(
-          <div className="nav-spacer" key={link.props.children + '-div'}>
-            {'|'}
+          <div className="nav-spacer" key={link.props.children + "-div"}>
+            {"|"}
           </div>
         );
       }
@@ -97,7 +95,9 @@ class NavComponent extends Component {
               alt="The ourlabels logo"
             />
           </a>
-          <Menu right isOpen={this.state.menuOpen}>{links}</Menu>
+          <Menu right isOpen={this.state.menuOpen}>
+            {links}
+          </Menu>
         </div>
       );
     }

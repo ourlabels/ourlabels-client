@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { withFormik } from 'formik';
+import React, { Component } from "react";
+import { withFormik } from "formik";
 
 const RequestAccessForm = ({
   values,
@@ -8,14 +8,14 @@ const RequestAccessForm = ({
   handleChange,
   handleBlur,
   handleSubmit,
-  isSubmitting,
+  isSubmitting
 }) => (
   <Form onSubmit={handleSubmit}>
     <Grid textAlign="center">
-      <GridRow style={{ width: '100%' }}>
+      <GridRow style={{ width: "100%" }}>
         <Icon name="registered" size="huge" />
       </GridRow>
-      <GridRow style={{ width: '100%' }}>
+      <GridRow style={{ width: "100%" }}>
         {window.innerWidth < 500 && (
           <Input
             className="signup-input"
@@ -41,19 +41,19 @@ const RequestAccessForm = ({
         )}
       </GridRow>
       {touched.requested_project &&
-          errors.requested_project && (
-          <GridRow>
-            <div className="error-label">{errors.requested_project}</div>
-          </GridRow>
-        )}
-      <GridRow style={{ width: '100%' }}>
+        errors.requested_project && (
+        <GridRow>
+          <div className="error-label">{errors.requested_project}</div>
+        </GridRow>
+      )}
+      <GridRow style={{ width: "100%" }}>
         <Button
           className="group-submit"
           type="submit"
           primary
           disabled={isSubmitting}
         >
-            Request Access
+          Request Access
         </Button>
       </GridRow>
     </Grid>
@@ -62,16 +62,16 @@ const RequestAccessForm = ({
 
 const FormikRequestAccessForm = withFormik({
   // Transform outer props into form values
-  mapPropsToValues: props => ({ requested_project: '' }),
+  mapPropsToValues: props => ({ requested_project: "" }),
   // Add a custom validation function (this can be async too!)
   validate: (values, props) => {
     const errors = {};
     if (!values.requested_project) {
-      errors.requested_project = 'Required';
+      errors.requested_project = "Required";
     }
     return errors;
   },
   handleSubmit: (values, props) => {
     props.props.handleSubmit(values.requested_project);
-  },
+  }
 })(RequestAccessForm);

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { withFormik } from 'formik';
+import React, { Component } from "react";
+import { withFormik } from "formik";
 import {
   Card,
   Modal,
@@ -10,9 +10,9 @@ import {
   Icon,
   Image,
   Input
-} from 'semantic-ui-react';
-import ourlabels from '../assets/ourlabels.png';
-import './SignupComponent.scss';
+} from "semantic-ui-react";
+import ourlabels from "../assets/ourlabels.png";
+import "./SignupComponent.scss";
 
 const SignupForm = ({
   values,
@@ -25,10 +25,10 @@ const SignupForm = ({
 }) => (
   <Form onSubmit={handleSubmit}>
     <Grid textAlign="center">
-      <GridRow style={{ width: '100%' }}>
+      <GridRow style={{ width: "100%" }}>
         <Icon name="user circle outline" size="huge" />
       </GridRow>
-      <GridRow style={{ width: '100%' }}>
+      <GridRow style={{ width: "100%" }}>
         {window.innerWidth < 500 && (
           <Input
             className="signup-input"
@@ -55,12 +55,13 @@ const SignupForm = ({
           />
         )}
       </GridRow>
-      {touched.email && errors.email && (
+      {touched.email &&
+        errors.email && (
         <GridRow>
           <div className="error-label">{errors.email}</div>
         </GridRow>
       )}
-      <GridRow style={{ width: '100%' }}>
+      <GridRow style={{ width: "100%" }}>
         {window.innerWidth < 500 && (
           <Input
             className="signup-input"
@@ -87,12 +88,13 @@ const SignupForm = ({
           />
         )}
       </GridRow>
-      {touched.username && errors.username && (
+      {touched.username &&
+        errors.username && (
         <GridRow>
           <div className="error-label">{errors.username}</div>
         </GridRow>
       )}
-      <GridRow style={{ width: '100%' }}>
+      <GridRow style={{ width: "100%" }}>
         {window.innerWidth < 500 && (
           <Input
             className="signup-input"
@@ -119,12 +121,13 @@ const SignupForm = ({
           />
         )}
       </GridRow>
-      {touched.password && errors.password && (
+      {touched.password &&
+        errors.password && (
         <GridRow>
           <div className="error-label">{errors.password}</div>
         </GridRow>
       )}
-      <GridRow style={{ width: '100%' }}>
+      <GridRow style={{ width: "100%" }}>
         {window.innerWidth < 500 && (
           <Input
             className="signup-input"
@@ -151,12 +154,13 @@ const SignupForm = ({
           />
         )}
       </GridRow>
-      {touched.retype && errors.retype && (
+      {touched.retype &&
+        errors.retype && (
         <GridRow>
           <div className="error-label">{errors.retype}</div>
         </GridRow>
       )}
-      <GridRow style={{ width: '100%' }}>
+      <GridRow style={{ width: "100%" }}>
         <Button
           className="button-signup"
           type="submit"
@@ -172,27 +176,32 @@ const SignupForm = ({
 const regexpEmail = /^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$/;
 const FormikSignupForm = withFormik({
   // Transform outer props into form values
-  mapPropsToValues: props => ({ username: '', password: '', retype: '', email: '' }),
+  mapPropsToValues: props => ({
+    username: "",
+    password: "",
+    retype: "",
+    email: ""
+  }),
   // Add a custom validation function (this can be async too!)
   validate: (values, props) => {
     const errors = {};
     if (!values.username) {
-      errors.username = 'Required';
+      errors.username = "Required";
     }
     if (!values.password) {
-      errors.password = 'Required';
+      errors.password = "Required";
     } else if (values.password.length < 16 || values.password.length > 60) {
-      errors.password = 'Password must be between 16 and 60 characters';
+      errors.password = "Password must be between 16 and 60 characters";
     }
     if (!values.retype) {
-      errors.retype = 'Required';
+      errors.retype = "Required";
     } else if (values.retype !== values.password) {
-      errors.retype = 'Password and verification must be the same';
+      errors.retype = "Password and verification must be the same";
     }
     if (!values.email) {
-      errors.email = 'Required';
+      errors.email = "Required";
     } else if (!regexpEmail.test(values.email)) {
-      errors.email = 'Email should be of someuser@ourlables.com';
+      errors.email = "Email should be of someuser@ourlables.com";
     }
     return errors;
   },

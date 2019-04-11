@@ -1,20 +1,20 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import { createHashHistory } from 'history';
-import { routerMiddleware, routerActions } from 'react-router-redux';
-import { createLogger } from 'redux-logger';
-import rootReducer from '../redux-reducers';
-import * as annotationsActions from '../redux-actions/annotations';
-import * as authActions from '../redux-actions/auth';
-import * as imageActions from '../redux-actions/image';
-import * as labelsActions from '../redux-actions/labels';
-import * as projectActions from '../redux-actions/project';
-import * as sequenceActions from '../redux-actions/sequence';
-import * as typesActions from '../redux-actions/types';
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import { createHashHistory } from "history";
+import { routerMiddleware, routerActions } from "react-router-redux";
+import { createLogger } from "redux-logger";
+import rootReducer from "../redux-reducers";
+import * as annotationsActions from "../redux-actions/annotations";
+import * as authActions from "../redux-actions/auth";
+import * as imageActions from "../redux-actions/image";
+import * as labelsActions from "../redux-actions/labels";
+import * as projectActions from "../redux-actions/project";
+import * as sequenceActions from "../redux-actions/sequence";
+import * as typesActions from "../redux-actions/types";
 
 export const history = createHashHistory();
 
-export const configureStore = (initialState) => {
+export const configureStore = initialState => {
   // Redux Configuration
   const middleware = [];
   const enhancers = [];
@@ -24,8 +24,8 @@ export const configureStore = (initialState) => {
 
   // Logging Middleware
   const logger = createLogger({
-    level: 'info',
-    collapsed: true,
+    level: "info",
+    collapsed: true
   });
   middleware.push(logger);
 
@@ -48,7 +48,7 @@ export const configureStore = (initialState) => {
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
       // Options: http://zalmoxisus.github.io/redux-devtools-extension/API/Arguments.html
-      actionCreators,
+      actionCreators
     })
     : compose;
   /* eslint-enable no-underscore-dangle */

@@ -1,30 +1,32 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { resetAnnotations } from '../../redux-actions/annotations';
-import NavComponent from '../../components/NavComponent.jsx';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { resetAnnotations } from "../../redux-actions/annotations";
+import NavComponent from "../../components/NavComponent.jsx";
 
 class NavContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {};
     this.releaseLabels = this.releaseLabels.bind(this);
-    this.logged_in_items_nolabels = { home: '/', projects: '/projects' };
-    this.logged_in_items = { home: '/', annotate: '/annotate', projects: '/projects' };
+    this.logged_in_items_nolabels = { home: "/", projects: "/projects" };
+    this.logged_in_items = {
+      home: "/",
+      annotate: "/annotate",
+      projects: "/projects"
+    };
     this.logged_out_items = {
-      home: '/',
-      login: '/login',
-      signup: '/signup',
-      projects: '/projects',
+      home: "/",
+      login: "/login",
+      signup: "/signup",
+      projects: "/projects"
     };
   }
   releaseLabels(evt) {
     this.props.dispatch(resetAnnotations());
   }
   render() {
-    const {
-      loggedIn, email, score, username, labels, location
-    } = this.props;
+    const { loggedIn, email, score, username, labels, location } = this.props;
 
     return (
       <div className="nav">
@@ -49,7 +51,7 @@ class NavContainer extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { auth, labels } = state;
   return {
     labels: labels.labels,
@@ -66,7 +68,10 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = dispatch => ({
-  dispatch,
+  dispatch
 });
-NavContainer = connect(mapStateToProps, mapDispatchToProps)(NavContainer);
+NavContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NavContainer);
 export default NavContainer;

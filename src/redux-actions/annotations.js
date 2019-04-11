@@ -1,23 +1,18 @@
-import request from 'superagent';
-let HOSTNAME = 'https://ourlabels.org';
-if (process.env.NODE_ENV === 'development') {
-  HOSTNAME = 'http://localhost:59003';
-}
+import { agent, HOSTNAME } from "../constants";
 
-export const GOT_ANNOTATIONS = 'GOT_ANNOTATIONS';
+export const GOT_ANNOTATIONS = "GOT_ANNOTATIONS";
 
 export const postAnnotations = (boxes, callback) => dispatch => {
-  return request
-    .agent()
+  return agent
     .withCredentials()
-    .post(HOSTNAME + '/v1/add/annotation')
+    .post(HOSTNAME + "/v1/add/annotation")
     .send({ boxes: boxes })
     .end((err, res) => {
       if (err || res.body == null) {
         return;
       } else if (res.body.success) {
         // emit the action with payload
-        if (typeof callback === 'function') {
+        if (typeof callback === "function") {
           callback();
         }
         return;
@@ -26,10 +21,9 @@ export const postAnnotations = (boxes, callback) => dispatch => {
 };
 
 export const getAnnotations = (offset, callback) => dispatch => {
-  return request
-    .agent()
+  return agent
     .withCredentials()
-    .get(HOSTNAME + '/v1/get/annotations')
+    .get(HOSTNAME + "/v1/get/annotations")
     .query({ offset })
     .end((err, res) => {
       if (err || res.body == null) {

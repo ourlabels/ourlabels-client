@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import SignupComponent from '../../components/SignupComponent.jsx';
-import { signUp } from '../../redux-actions/auth';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import SignupComponent from "../../components/SignupComponent.jsx";
+import { signUp } from "../../redux-actions/auth";
 
 class SignupContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
-      email: ''
+      username: "",
+      password: "",
+      email: ""
     };
   }
   componentWillReceiveProps(newProps) {
     if (newProps.signed_up) {
-      newProps.history.push('/login');
+      newProps.history.push("/login");
     }
   }
   render() {
@@ -44,4 +44,7 @@ const mapDispatchToProps = dispatch => {
     dispatch
   );
 };
-export default connect(mapStateToProps, mapDispatchToProps)(SignupContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignupContainer);

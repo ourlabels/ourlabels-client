@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import HomeComponent from '../../components/HomeComponent.jsx';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import HomeComponent from "../../components/HomeComponent.jsx";
 
 const getLocalDate = date => {
   let realDate = new Date(0);
   realDate.setUTCSeconds(date);
   var options = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric"
   };
-  return `${realDate.toLocaleDateString('en-US', options)}`;
+  return `${realDate.toLocaleDateString("en-US", options)}`;
 };
 
 class Home extends Component {
@@ -36,5 +36,8 @@ const mapDispatchToProps = dispatch => {
     dispatch
   };
 };
-Home = connect(mapStateToProps, mapDispatchToProps)(Home);
+Home = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home);
 export default Home;

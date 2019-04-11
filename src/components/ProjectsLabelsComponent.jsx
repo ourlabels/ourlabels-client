@@ -1,7 +1,15 @@
-import React from 'react';
-import { Modal, Header, Card, Form, Button, Icon, Container } from 'semantic-ui-react';
-import { SketchPicker } from 'react-color';
-const labelArrayFromObject = (labelObj) => {
+import React from "react";
+import {
+  Modal,
+  Header,
+  Card,
+  Form,
+  Button,
+  Icon,
+  Container
+} from "semantic-ui-react";
+import { SketchPicker } from "react-color";
+const labelArrayFromObject = labelObj => {
   const keys = Object.keys(labelObj);
   const newLabels = keys.map((key, index) => {
     const label = labelObj[key];
@@ -19,7 +27,7 @@ const labelArrayFromObject = (labelObj) => {
   });
   return newLabels;
 };
-const inverseColor = (color) => {
+const inverseColor = color => {
   const r = 255 - color.r;
   const g = 255 - color.g;
   const b = 255 - color.b;
@@ -28,7 +36,10 @@ const inverseColor = (color) => {
 class ProjectsLabelsComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { labels: labelArrayFromObject(this.props.labels), pickerForIndex: null };
+    this.state = {
+      labels: labelArrayFromObject(this.props.labels),
+      pickerForIndex: null
+    };
     this.showPickerFor = this.showPickerFor.bind(this);
     this.hidePicker = this.hidePicker.bind(this);
     this.change = this.change.bind(this);
@@ -51,10 +62,14 @@ class ProjectsLabelsComponent extends React.Component {
     const length = sortedLabels.length;
     sortedLabels.push({
       key: length > 0 ? sortedLabels[length - 1].key + 1 : 0,
-      type: 'new_label',
-      description: '',
-      r: 0, g: 0, b: 0, a: 1.0,
-      new: true, modified: true
+      type: "new_label",
+      description: "",
+      r: 0,
+      g: 0,
+      b: 0,
+      a: 1.0,
+      new: true,
+      modified: true
     });
     this.setState({ labels: sortedLabels });
   }
@@ -78,18 +93,18 @@ class ProjectsLabelsComponent extends React.Component {
   deleteLabel(evt, index) {
     evt.preventDefault();
     const { labels } = this.state;
-    console.log('index:', index);
+    console.log("index:", index);
     labels.splice(index, 1);
     this.setState({ labels });
   }
   changeColor(color) {
     const { r, g, b, a } = color.rgb;
     let { labels, pickerForIndex } = this.state;
-    labels[pickerForIndex]['r'] = r;
-    labels[pickerForIndex]['g'] = g;
-    labels[pickerForIndex]['b'] = b;
-    labels[pickerForIndex]['a'] = a;
-    labels[pickerForIndex]['modified'] = true;
+    labels[pickerForIndex]["r"] = r;
+    labels[pickerForIndex]["g"] = g;
+    labels[pickerForIndex]["b"] = b;
+    labels[pickerForIndex]["a"] = a;
+    labels[pickerForIndex]["modified"] = true;
     this.setState({ labels });
   }
   render() {
@@ -103,8 +118,16 @@ class ProjectsLabelsComponent extends React.Component {
     }
     return (
       <Form onSubmit={this.submit}>
-        <Modal open={pickerForIndex != null} closeIcon onClose={this.hidePicker} size="tiny">
-          <Modal.Header>Color Picker for {labels[pickerForIndex] != null ? labels[pickerForIndex].type : ''}</Modal.Header>
+        <Modal
+          open={pickerForIndex != null}
+          closeIcon
+          onClose={this.hidePicker}
+          size="tiny"
+        >
+          <Modal.Header>
+            Color Picker for{" "}
+            {labels[pickerForIndex] != null ? labels[pickerForIndex].type : ""}
+          </Modal.Header>
           <Modal.Content>
             <Modal.Description>
               <SketchPicker onChangeComplete={this.changeColor} color={color} />
@@ -112,7 +135,12 @@ class ProjectsLabelsComponent extends React.Component {
           </Modal.Content>
         </Modal>
         <Header as="h2">Labels</Header>
-        <Button color="green" onClick={this.addLabel} icon="plus" content="add label" />
+        <Button
+          color="green"
+          onClick={this.addLabel}
+          icon="plus"
+          content="add label"
+        />
         <Form.Button content="submit" />
         <br />
         <Card.Group>
@@ -120,25 +148,69 @@ class ProjectsLabelsComponent extends React.Component {
             return (
               <Card key={`${label.key}`}>
                 <Card.Content>
-                  <Form.Input label="type" placeholder="type" defaultValue={label.type} onChange={(e, v) => {
-                    this.change(index, 'type', v.value);
-                  }}
+                  <Form.Input
+                    label="type"
+                    placeholder="type"
+                    defaultValue={label.type}
+                    onChange={(e, v) => {
+                      this.change(index, "type", v.value);
+                    }}
                   />
-                  <Form.Input label="description" placeholder="description" defaultValue={label.description} onChange={(e, v) => {
-                    this.change(index, 'description', v.value);
-                  }}
+                  <Form.Input
+                    label="description"
+                    placeholder="description"
+                    defaultValue={label.description}
+                    onChange={(e, v) => {
+                      this.change(index, "description", v.value);
+                    }}
                   />
-                  <Button onClick={(evt) => { this.showPickerFor(evt, index); }} style={{ backgroundColor: `rgba(${label.r},${label.g},${label.b},${label.a})` }}><Icon name="crosshairs" color={inverseColor({ r: label.r, g: label.g, b: label.b, a: label.a })} /><span style={{ color: inverseColor({ r: label.r, g: label.g, b: label.b, a: label.a }) }}>{'Color'}</span></Button>
-                  <Button icon="remove circle" onClick={(evt) => { this.deleteLabel(evt, index); }} />
+                  <Button
+                    onClick={evt => {
+                      this.showPickerFor(evt, index);
+                    }}
+                    style={{
+                      backgroundColor: `rgba(${label.r},${label.g},${label.b},${
+                        label.a
+                      })`
+                    }}
+                  >
+                    <Icon
+                      name="crosshairs"
+                      color={inverseColor({
+                        r: label.r,
+                        g: label.g,
+                        b: label.b,
+                        a: label.a
+                      })}
+                    />
+                    <span
+                      style={{
+                        color: inverseColor({
+                          r: label.r,
+                          g: label.g,
+                          b: label.b,
+                          a: label.a
+                        })
+                      }}
+                    >
+                      {"Color"}
+                    </span>
+                  </Button>
+                  <Button
+                    icon="remove circle"
+                    onClick={evt => {
+                      this.deleteLabel(evt, index);
+                    }}
+                  />
                 </Card.Content>
               </Card>
             );
           })}
-        </Card.Group><br />
+        </Card.Group>
+        <br />
         <Form.Button content="submit" />
       </Form>
     );
   }
 }
 export default ProjectsLabelsComponent;
-

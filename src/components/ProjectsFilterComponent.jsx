@@ -1,6 +1,6 @@
-import React from 'react';
-import { Modal, Header, Segment, Form } from 'semantic-ui-react';
-import { SketchPicker } from 'react-color';
+import React from "react";
+import { Modal, Header, Segment, Form } from "semantic-ui-react";
+import { SketchPicker } from "react-color";
 
 class ProjectsFilterComponent extends React.Component {
   constructor(props) {
@@ -8,6 +8,6 @@ class ProjectsFilterComponent extends React.Component {
     this.state = { labels: this.props.labels, pickerForIndex: null };
   }
   render() {
-    return (<Segment></Segment>);
+    return <Segment />;
   }
 }

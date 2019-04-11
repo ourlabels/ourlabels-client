@@ -1,4 +1,4 @@
-import { LOGGED_IN, SIGNED_UP } from '../redux-actions/auth';
+import { LOGGED_IN, SIGNED_UP } from "../redux-actions/auth";
 
 const initialState = {
   loggedIn: false,
@@ -8,7 +8,7 @@ const initialState = {
   email: null,
   just_logged_in: false,
   currentProject: null,
-  score: 0,
+  score: 0
 };
 
 export default function auth(state = initialState, action) {
@@ -24,14 +24,14 @@ export default function auth(state = initialState, action) {
         currentProject: action.payload.currentProject,
         role: action.payload.role,
         loggedIn: true,
-        signedUp: false,
+        signedUp: false
       });
     case SIGNED_UP:
       if (action.payload) {
         return Object.assign({}, state, {
           loggedIn: false,
           signedUp: true,
-          session: null,
+          session: null
         });
       }
       return state;
