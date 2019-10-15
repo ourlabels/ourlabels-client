@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import SignupComponent from "../../components/SignupComponent.jsx";
+import SignupComponent from "../../components/Signup";
 import { signUp } from "../../redux-actions/auth";
 
 class SignupContainer extends Component {

@@ -1,7 +1,7 @@
 //https://gist.github.com/andrewluetgers/7c4a90cbe6341c401d0b7975a8ceeedb
 import React, { Component } from "react";
 import { Image } from "react-konva";
-import broken from "../assets/broken.svg";
+import broken from "../../assets/broken.svg";
 
 var imgCache = {
   brokenImage: document.createElement("img")

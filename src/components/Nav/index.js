@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Segment, Image } from "semantic-ui-react";
 import { elastic as Menu } from "react-burger-menu";
-import logo from "../assets/logo.png";
-import ourlabels from "../assets/ourlabels.png";
+import logo from "../../assets/logo.png";
+import ourlabels from "../../assets/ourlabels.png";
 import { Link } from "react-router-dom";
 import "./NavComponent.scss";
 

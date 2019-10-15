@@ -9,8 +9,8 @@ import {
   Button,
   Image
 } from "semantic-ui-react";
-import science from "../assets/types/science.svg";
-import civic from "../assets/types/civic.svg";
+import science from "../../assets/types/science.svg";
+import civic from "../../assets/types/civic.svg";
 import "./ProjectsCardsComponent.scss";
 const projectTypeImages = {
   1: science,

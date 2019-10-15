@@ -6,7 +6,7 @@ import ProjectsCardsComponent from "./ProjectsCardsComponent.jsx";
 import ProjectsFilterComponent from "./ProjectsFilterComponent.jsx";
 import ProjectsLabelsComponent from "./ProjectsLabelsComponent.jsx";
 import ProjectsSettingsComponent from "./ProjectsSettingsComponent.jsx";
-
+import ProjectsAddComponent from "./ProjectsAddComponent.jsx";
 const override = css`
   display: block;
   margin: 0 auto;
@@ -115,6 +115,7 @@ class ProjectsComponent extends React.Component {
         {this.state.showProjects && (
           <Container>
             <Header as="h1">Projects</Header>
+            <ProjectsAddComponent />
             {["owned", "requested", "allowed", "refused", "other"].map(
               projectType => {
                 return (

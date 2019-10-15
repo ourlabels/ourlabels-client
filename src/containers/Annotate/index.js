@@ -3,8 +3,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Modal } from "semantic-ui-react";
 import ReactLoading from "react-loading";
-import ImageComponent from "../../components/ImageComponent.jsx";
-import ClassificationComponent from "../../components/ClassificationComponent.jsx";
+import ImageComponent from "../../components/Image";
+import ClassificationComponent from "../../components/Classification";
 import { getImage, updateIndex } from "../../redux-actions/image";
 import { getLabels } from "../../redux-actions/labels";
 import {
