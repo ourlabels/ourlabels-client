@@ -7,12 +7,15 @@ import {
   Button,
   Dropdown,
   Icon,
+  Input,
+  Grid,
   Container
 } from "semantic-ui-react";
+import NumericInput from "react-numeric-input";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import ReactTooltip from "react-tooltip";
-import science from "../assets/types/science.svg";
-import civic from "../assets/types/civic.svg";
+import science from "../../assets/types/science.svg";
+import civic from "../../assets/types/civic.svg";
 import "./ProjectsSettingsComponent.scss";
 
 const getFilesSize = files => {
@@ -38,33 +41,26 @@ class ProjectsSettingsComponent extends React.Component {
       maxSize
     } = this.props.project;
     const { projectTypes } = this.props;
-    let sequences = sequencenames.map(seq => {
+    let sequences = sequencenames.map((seq, index) => {
       return {
-        originalName: seq.name,
-        originalVideo: seq.video,
-        originalHSplit: seq.hSplit,
-        originalVSplit: seq.vSplit,
-        numFiles: seq.files,
-        newName: seq.name,
-        newHSplit: seq.hSplit,
-        newVSplit: seq.vSplit,
-        deleted: false,
-        new: false,
-        updated: false
+        index,
+        name: seq.name,
+        video: seq.video,
+        hSplit: seq.hSplit,
+        vSplit: seq.vSplit,
+        numFiles: seq.files
       };
     });
     const newSequence = {
-      newName: "",
-      newFile: null,
-      newVideo: projectTypes[type].video,
-      newHSplit: 1,
-      newVSplit: 1,
-      newBeginS: 0,
-      newLengthS: 100,
-      newEveryNFrames: 1,
-      dropZoneActive: false,
-      deleted: false,
-      new: true
+      name: "",
+      file: null,
+      video: projectTypes[type].video,
+      hSplit: 1,
+      vSplit: 1,
+      start: 0,
+      length: 100,
+      everyNFrames: 1,
+      dropZoneActive: false
     };
     this.state = {
       project: {
@@ -72,11 +68,14 @@ class ProjectsSettingsComponent extends React.Component {
         refused,
         requested,
         owner: this.props.username,
-        type,
+        type: `${type}`,
         description,
         fullDescription,
         sequences,
-        publicType,
+        newSequences: [],
+        deletedSequences: [],
+        modifiedSequences: [], // not used yet
+        publicType: `${publicType}`,
         dropZoneActive: true
       },
       newSequence,
@@ -95,14 +94,16 @@ class ProjectsSettingsComponent extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.getImageForType = this.getImageForType.bind(this);
     this.onChangeNewSequence = this.onChangeNewSequence.bind(this);
-    this.onChangeSequence = this.onChangeSequence.bind(this);
     this.onChangeProjectType = this.onChangeProjectType.bind(this);
     this.changeProjectInfo = this.changeProjectInfo.bind(this);
     this.addNewSequence = this.addNewSequence.bind(this);
     this.resetNewSequence = this.resetNewSequence.bind(this);
+    this.deleteSequence = this.deleteSequence.bind(this);
+    this.deleteNewSequence = this.deleteNewSequence.bind(this);
     this.addScrollListener = this.addScrollListener.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
   }
+
   getImageForType(type) {
     if (type === 2 || type == 3) {
       return science;
@@ -113,10 +114,8 @@ class ProjectsSettingsComponent extends React.Component {
 
   onDropNew(newFile) {
     let { newSequence, maxSize } = this.state;
-    if (newSequence.newFile == null) {
-      newSequence.newFile = newFile;
-      return this.setState({ newSequence });
-    }
+    newSequence.file = newFile[0];
+    return this.setState({ newSequence });
   }
 
   onDragNewEnter(evt) {
@@ -133,57 +132,37 @@ class ProjectsSettingsComponent extends React.Component {
 
   addNewSequence(evt) {
     evt.preventDefault();
-    let { newSequence } = this.state;
+    let { newSequence, project } = this.state;
     console.log(newSequence);
-    const { project } = this.state;
-    if (newSequence.newFile == null || newSequence.newName === "") {
+    if (!newSequence.file || !newSequence.name) {
       return;
     }
-    let sequencesNames = project.sequences
-      .filter(seq => {
-        return !seq.deleted;
-      })
-      .map(seq => {
-        return seq.newName;
-      });
-    if (sequencesNames.includes(newSequence.newName)) {
+    let sequencesNames = project.sequences.map(seq => {
+      return seq.name;
+    });
+    if (sequencesNames.includes(newSequence.name)) {
       return;
     }
-    if (sequencesNames.length >= 26) {
-      return;
-    }
-    project.sequences.push(newSequence);
+    project.newSequences.push(newSequence);
+    console.log(project.newSequences);
     this.setState({ project });
     this.resetNewSequence();
   }
+
   resetNewSequence() {
     let resetSequence = {
-      newName: "",
-      files: 0,
-      newFile: null,
-      newVideo: this.props.projectTypes[this.state.project.type].video,
-      newHSplit: 1,
-      newVSplit: 1,
-      newBeginS: 0,
-      newLengthS: 100,
-      newEveryNFrames: 1,
-      dropZoneActive: false,
-      deleted: false,
-      new: true
+      name: "",
+      file: null,
+      video: this.props.projectTypes[this.state.project.type].video,
+      hSplit: 1,
+      vSplit: 1,
+      start: 0,
+      length: 100,
+      everyNFrames: 1,
+      dropZoneActive: false
     };
-    // no memory leaks
 
-    this.state.newSequence.newFile.forEach(file => {
-      window.URL.revokeObjectURL(file.preview);
-    });
     this.setState({ newSequence: resetSequence });
-  }
-
-  onChangeSequence(index, type, value) {
-    const { project } = this.state;
-    project.sequences[index][type] = value;
-    project.sequences[index].updated = true;
-    this.setState({ project });
   }
 
   onChangeNewSequence(type, value) {
@@ -194,15 +173,21 @@ class ProjectsSettingsComponent extends React.Component {
 
   deleteSequence(index) {
     const { project } = this.state;
-    if (
-      project.sequences[index].newFile != null &&
-      project.sequences[index].newFile.length > 0
-    ) {
-      project.sequences[index].newFile.forEach(file => {
-        window.URL.revokeObjectURL(file.preview);
-      });
-    }
-    project.sequences[index].deleted = true;
+    const deleted = project.sequences.splice(index, 1);
+    project.deletedSequences.push(deleted[0]);
+    this.setState({ project });
+  }
+
+  deleteNewSequence(index) {
+    const { project } = this.state;
+    project.newSequences.splice(index, 1);
+    this.setState({ project });
+  }
+
+  undeleteSequence(index) {
+    const { project } = this.state;
+    const deleted = project.deletedSequences.splice(index, 1);
+    project.sequences.push(deleted[0]); // does not put it where it was (.idx) because others may have been removed since then
     this.setState({ project });
   }
 
@@ -221,7 +206,9 @@ class ProjectsSettingsComponent extends React.Component {
       project.description,
       project.fullDescription,
       project.type,
-      project.sequences
+      project.sequences,
+      project.deletedSequences,
+      project.newSequences
     );
   }
 
@@ -242,9 +229,9 @@ class ProjectsSettingsComponent extends React.Component {
     }
     const { project } = this.state;
     let source = project[id];
-    let item = source[idxS];
-    source.splice(idxS, 1);
+    const item = source.splice(idxS, 1);
     source.splice(idxD, 0, item);
+    project[id] = source;
     this.setState({ project });
   }
 
@@ -260,6 +247,7 @@ class ProjectsSettingsComponent extends React.Component {
     const { project } = this.state;
     let source = project[id];
     source.splice(idxD, 0, item);
+    project[id] = source;
     this.setState({ project });
   }
 
@@ -272,10 +260,11 @@ class ProjectsSettingsComponent extends React.Component {
   onChangeProjectType(evt, val) {
     const { project } = this.state;
     project.type = val.value;
-    project.newVideo = this.props.projectTypes[val.value].video;
+    project.video = this.props.projectTypes[val.value].video;
     this.setState({ project });
     this.resetNewSequence();
   }
+
   addScrollListener(node) {
     if (node) {
       node.addEventListener("scroll", this.handleScroll);
@@ -316,20 +305,23 @@ class ProjectsSettingsComponent extends React.Component {
       publicType,
       type,
       sequences,
+      newSequences,
+      deletedSequences,
       owner
     } = this.state.project;
     const { newSequence, maxSize } = this.state;
     const { projectTypes } = this.props;
     const projectOptions = Object.keys(projectTypes).map((key, index) => {
       return {
+        key: key,
         image: { avatar: true, src: this.getImageForType(parseInt(key)) },
         text: projectTypes[key].name,
-        value: parseInt(key)
+        value: key
       };
     });
     const publicTypeOptions = [
-      { text: "public", value: true, icon: { name: "unlock" } },
-      { text: "private", value: false, icon: { name: "lock" } }
+      { key: "true", text: "public", value: "true", icon: { name: "unlock" } },
+      { key: "false", text: "private", value: "false", icon: { name: "lock" } }
     ];
     return (
       <Container>
@@ -400,8 +392,10 @@ class ProjectsSettingsComponent extends React.Component {
                     fluid
                     selection
                     options={projectOptions}
-                    defaultValue={type}
-                    onChange={this.onChangeProjectType}
+                    value={type}
+                    onChange={(e, v) => {
+                      this.onChange("type", v.value);
+                    }}
                   />
                 </Form.Group>
                 <Form.Group>
@@ -409,7 +403,7 @@ class ProjectsSettingsComponent extends React.Component {
                     fluid
                     selection
                     options={publicTypeOptions}
-                    defaultValue={publicType}
+                    value={publicType}
                     onChange={(e, v) => {
                       this.onChange("publicType", v.value);
                     }}
@@ -538,186 +532,210 @@ class ProjectsSettingsComponent extends React.Component {
                   </DragDropContext>
                 </Form.Group>
                 <Header as="h4">New Sequence</Header>
-                <Segment style={{ backgroundColor: "gray" }}>
-                  <Form.Group>
-                    <Icon
-                      name={newSequence.newVideo ? "video" : "camera"}
-                      size="big"
-                    />
-                    <Dropzone
-                      className="dropzone"
-                      activeClassName="dropzone-enabled"
-                      disabledClassName="dropzone-disabled"
-                      disabled={newSequence.newFile != null}
-                      accept={[
-                        "application/x-tar",
-                        "application/gzip",
-                        "application/x-bzip2"
-                      ]}
-                      multiple={false}
-                      maxSize={maxSize * Math.pow(2, 20)}
-                      onDragEnter={this.onDragNewEnter}
-                      onDragLeave={this.onDragNewLeave}
-                      onDrop={this.onDropNew}
-                      data-for={"dropzoneNewSequence"}
-                      data-tip={
-                        newSequence.newVideo
-                          ? "<p>Drop <b>a</b> video file here of MP2, MP4, TS types (or gzipped/bzipped)</p>"
-                          : "<p>Drop image files here or a gzipped or bzipped set of images</p>"
-                      }
-                      data-html={true}
-                      data-iscapture="true"
-                    >
-                      {newSequence.dropZoneActive && (
-                        <div className="dropzone-text">Leave files here</div>
-                      )}
-                      {!newSequence.dropZoneActive && (
-                        <div className="dropzone-text">Drag files here</div>
-                      )}
-                    </Dropzone>
-                    <Form.TextArea
-                      label="sequence name"
-                      value={newSequence.newName}
-                      onChange={(e, v) => {
-                        this.onChangeNewSequence("newName", v.value);
-                      }}
-                    />
+                <Segment className="newseq">
+                  <Icon
+                    name={newSequence.video ? "video" : "camera"}
+                    size="big"
+                  />
+                  <Dropzone
+                    className="dropzone"
+                    activeClassName="dropzone-enabled"
+                    disabledClassName="dropzone-disabled"
+                    accept={[
+                      "application/x-tar",
+                      "application/gzip",
+                      "application/x-bzip2"
+                    ]}
+                    multiple={false}
+                    maxSize={maxSize * Math.pow(2, 20)}
+                    onDragEnter={this.onDragNewEnter}
+                    onDragLeave={this.onDragNewLeave}
+                    onDrop={this.onDropNew}
+                    data-for={"dropzoneNewSequence"}
+                    data-tip={
+                      newSequence.video
+                        ? "<p>Drop <b>a</b> video file here of MP2, MP4, TS types that has been gzipped/bzipped</p>"
+                        : "<p>Drop image files here or a gzipped or bzipped set of images</p>"
+                    }
+                    data-html={true}
+                    data-iscapture="true"
+                  >
+                    {newSequence.dropZoneActive && (
+                      <div className="dropzone-text">Leave file here</div>
+                    )}
+                    {!newSequence.dropZoneActive && (
+                      <div className="dropzone-text">Drag file here</div>
+                    )}
+                  </Dropzone>
+                  {newSequence.file != null && (
+                    <div>file: {newSequence.file.name}</div>
+                  )}
+                  <Input
+                    type="text"
+                    placeholder="sequence name"
+                    value={newSequence.name}
+                    onChange={(e, v) => {
+                      this.onChangeNewSequence("name", v.value);
+                    }}
+                  />
+                  <NumericInput
+                    min={1}
+                    max={10}
+                    step={1}
+                    precision={0}
+                    value={newSequence.vSplit}
+                    onChange={(v, s, i) => {
+                      this.onChangeNewSequence("vSplit", v);
+                    }}
+                  />
+
+                  <NumericInput
+                    min={1}
+                    max={10}
+                    step={1}
+                    value={newSequence.hSplit}
+                    onChange={(v, s, i) => {
+                      this.onChangeNewSequence("hSplit", v);
+                    }}
+                  />
+                  {newSequence.newVideo && (
                     <Form.Input
                       size="small"
                       type="number"
-                      min="1"
+                      label="Start seconds"
+                      min={0}
+                      max={360}
+                      step={10}
+                      defaultValue={newSequence.start}
+                      onChange={(e, v) => {
+                        this.onChangeNewSequence("start", parseInt(v.value));
+                      }}
+                    />
+                  )}
+                  {newSequence.newVideo && (
+                    <Form.Input
+                      size="small"
+                      type="number"
+                      label="Length to capture"
+                      min={100}
+                      max={900}
+                      step={5}
+                      defaultValue={newSequence.length}
+                      onChange={(e, v) => {
+                        this.onChangeNewSequence("length", parseInt(v.value));
+                      }}
+                    />
+                  )}
+                  {newSequence.newVideo && (
+                    <Form.Input
+                      size="small"
+                      type="number"
+                      label="Every n frames"
+                      min="0"
                       max="10"
-                      label="Vertical split"
-                      defaultValue={newSequence.newVSplit}
+                      defaultValue={newSequence.everyNFrames}
                       onChange={(e, v) => {
                         this.onChangeNewSequence(
-                          "newVSplit",
+                          "everyNFrames",
                           parseInt(v.value)
                         );
                       }}
                     />
-                    <Form.Input
-                      size="small"
-                      type="number"
-                      min="1"
-                      max="10"
-                      label="Horizontal split"
-                      defaultValue={newSequence.newHSplit}
-                      onChange={(e, v) => {
-                        this.onChangeNewSequence(
-                          "newHSplit",
-                          parseInt(v.value)
-                        );
-                      }}
-                    />
-                    {newSequence.newVideo && (
-                      <Form.Input
-                        size="small"
-                        type="number"
-                        label="Start seconds"
-                        min="0"
-                        max="360"
-                        defaultValue={newSequence.newBeginS}
-                        onChange={(e, v) => {
-                          this.onChangeNewSequence(
-                            "newBeginS",
-                            parseInt(v.value)
-                          );
-                        }}
-                      />
-                    )}
-                    {newSequence.newVideo && (
-                      <Form.Input
-                        size="small"
-                        type="number"
-                        label="Length to capture"
-                        min="100"
-                        max="900"
-                        defaultValue={newSequence.newLengthS}
-                        onChange={(e, v) => {
-                          this.onChangeNewSequence(
-                            "newLengthS",
-                            parseInt(v.value)
-                          );
-                        }}
-                      />
-                    )}
-                    {newSequence.newVideo && (
-                      <Form.Input
-                        size="small"
-                        type="number"
-                        label="Every n frames"
-                        min="0"
-                        max="10"
-                        defaultValue={newSequence.newEveryNFrames}
-                        onChange={(e, v) => {
-                          this.onChangeNewSequence(
-                            "newEveryNFrames",
-                            parseInt(v.value)
-                          );
-                        }}
-                      />
-                    )}
-                    <Button primary onClick={this.addNewSequence}>
-                      Add
-                    </Button>
-                    <Button secondary onClick={this.resetNewSequence}>
-                      Reset
-                    </Button>
-                  </Form.Group>
+                  )}
+                  <Button primary onClick={this.addNewSequence}>
+                    Add
+                  </Button>
+                  <Button secondary onClick={this.resetNewSequence}>
+                    Reset
+                  </Button>
                 </Segment>
-                <Header as="h4">Created Sequences</Header>
+                <Header as="h4">New Sequences</Header>
+                {newSequences.map((seq, idx) => {
+                  const vSplitArray = Array(seq.vSplit).fill(1);
+                  const hSplitArray = Array(seq.hSplit).fill(1);
+                  return (
+                    <Segment key={`${seq.name}-new`} className="seq-segment">
+                      <Icon name={seq.video ? "video" : "camera"} size="big" />
+                      <div className="seq-name">{`"${seq.name}"`}</div>
+                      <div className="splits">
+                        <div>Sections:</div>
+                        <Grid columns={seq.hSplit}>
+                          {vSplitArray.map((a, i) => {
+                            return (
+                              <Grid.Row
+                                className="splits-v"
+                                key={`row-${seq.name}-${i}`}
+                              >
+                                {hSplitArray.map((a, j) => {
+                                  return (
+                                    <Grid.Column
+                                      className="splits-h"
+                                      key={`col-${seq.name}-${j}`}
+                                    >
+                                      x
+                                    </Grid.Column>
+                                  );
+                                })}
+                              </Grid.Row>
+                            );
+                          })}
+                        </Grid>
+                      </div>
+                      <div className="seq-icon">
+                        <Icon
+                          color="red"
+                          onClick={() => {
+                            this.deleteNewSequence(idx);
+                          }}
+                          name="x"
+                          data-for={"remove"}
+                          data-tip="Remove this item"
+                          data-iscapture="true"
+                          size="large"
+                        />
+                      </div>
+                    </Segment>
+                  );
+                })}
+                <Header as="h4">Existing Sequences</Header>
                 {sequences.map((seq, idx) => {
+                  const vSplitArray = Array(seq.vSplit).fill(1);
+                  const hSplitArray = Array(seq.hSplit).fill(1);
                   return (
                     <Segment
-                      key={`${seq.newName}-${seq.deleted}`}
-                      style={{ display: seq.deleted ? "none" : "block" }}
+                      key={`${seq.name}-existing`}
+                      className="seq-segment"
                     >
-                      <Form.Group>
-                        <Icon
-                          name={seq.newVideo ? "video" : "camera"}
-                          size="big"
-                        />
-                        <div className="dropzone-files">
-                          {seq.numFiles ? seq.numFiles : 0} files
-                        </div>
-                        <Form.TextArea
-                          label="sequence name"
-                          value={seq.newName}
-                          onChange={(e, v) => {
-                            this.onChangeSequence(idx, "newName", v.value);
-                          }}
-                        />
-                        <Form.Input
-                          size="small"
-                          type="number"
-                          min="1"
-                          max="5"
-                          label="Vertical split"
-                          value={seq.newVSplit}
-                          onChange={(e, v) => {
-                            this.onChangeSequence(
-                              idx,
-                              "newVSplit",
-                              parseInt(v.value)
+                      <Icon name={seq.video ? "video" : "camera"} size="big" />
+                      <div className="seq-name">{`"${seq.name}"`}</div>
+                      <div className="files">
+                        {seq.numFiles ? seq.numFiles : 0} files
+                      </div>
+                      <div className="splits">
+                        <div>Sections:</div>
+                        <Grid columns={seq.hSplit}>
+                          {vSplitArray.map((a, i) => {
+                            return (
+                              <Grid.Row
+                                className="splits-v"
+                                key={`row-${seq.name}-${i}`}
+                              >
+                                {hSplitArray.map((a, j) => {
+                                  return (
+                                    <Grid.Column
+                                      className="splits-h"
+                                      key={`col-${seq.name}-${j}`}
+                                    >
+                                      x
+                                    </Grid.Column>
+                                  );
+                                })}
+                              </Grid.Row>
                             );
-                          }}
-                        />
-                        <Form.Input
-                          size="small"
-                          type="number"
-                          min="1"
-                          max="5"
-                          label="Horizontal split"
-                          value={seq.newHSplit}
-                          onChange={(e, v) => {
-                            this.onChangeSequence(
-                              idx,
-                              "newHSplit",
-                              parseInt(v.value)
-                            );
-                          }}
-                        />
+                          })}
+                        </Grid>
+                      </div>
+                      <div className="seq-icon">
                         <Icon
                           color="red"
                           onClick={() => {
@@ -728,9 +746,62 @@ class ProjectsSettingsComponent extends React.Component {
                           data-tip="Remove this item"
                           data-iscapture="true"
                           size="large"
-                          style={{ float: "right" }}
                         />
-                      </Form.Group>
+                      </div>
+                    </Segment>
+                  );
+                })}
+                <Header as="h4">Deleting Sequences</Header>
+                {deletedSequences.map((seq, idx) => {
+                  const vSplitArray = Array(seq.vSplit).fill(1);
+                  const hSplitArray = Array(seq.hSplit).fill(1);
+                  return (
+                    <Segment
+                      key={`${seq.name}-existing`}
+                      className="seq-segment"
+                    >
+                      <Icon name={seq.video ? "video" : "camera"} size="big" />
+                      <div className="seq-name">{`"${seq.name}"`}</div>
+                      <div className="files">
+                        {seq.numFiles ? seq.numFiles : 0} files
+                      </div>
+                      <div className="splits">
+                        <div>Sections:</div>
+                        <Grid columns={seq.hSplit}>
+                          {vSplitArray.map((a, i) => {
+                            return (
+                              <Grid.Row
+                                className="splits-v"
+                                key={`row-${seq.name}-${i}`}
+                              >
+                                {hSplitArray.map((a, j) => {
+                                  return (
+                                    <Grid.Column
+                                      className="splits-h"
+                                      key={`col-${seq.name}-${j}`}
+                                    >
+                                      x
+                                    </Grid.Column>
+                                  );
+                                })}
+                              </Grid.Row>
+                            );
+                          })}
+                        </Grid>
+                      </div>
+                      <div className="seq-icon">
+                        <Icon
+                          color="red"
+                          onClick={() => {
+                            this.undeleteSequence(idx);
+                          }}
+                          name="undo"
+                          data-for={"undo"}
+                          data-tip="undo remove this item"
+                          data-iscapture="true"
+                          size="large"
+                        />
+                      </div>
                     </Segment>
                   );
                 })}

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Card, Image, Icon, Modal, Header } from "semantic-ui-react";
 import "./HomeComponent.scss";
-import mouse from "../assets/mouse.svg";
+import mouse from "../../assets/mouse.svg";
 const cards = [
   {
     key: "welcome",

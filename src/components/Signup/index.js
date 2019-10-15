@@ -11,7 +11,7 @@ import {
   Image,
   Input
 } from "semantic-ui-react";
-import ourlabels from "../assets/ourlabels.png";
+import ourlabels from "../../assets/ourlabels.png";
 import "./SignupComponent.scss";
 
 const SignupForm = ({

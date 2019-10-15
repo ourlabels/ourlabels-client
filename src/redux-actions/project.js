@@ -10,10 +10,23 @@ export const GOT_PROJECT_FOR_UPDATE = "GOT_PROJECT_FOR_UPDATE";
 export const REQUESTED_ACCESS = "REQUESTED_ACCESS";
 export const GOT_FILE = "GOT_FILE";
 
-export const addProject = new_project => dispatch =>
+export const addProject = new_project => dispatch => {
+  const {
+    title,
+    description,
+    full_description,
+    projectType,
+    privateType
+  } = new_project;
   agent
     .post(`${HOSTNAME}/v1/add/project`)
-    .send({ title: new_project.title, description: new_project.description })
+    .send({
+      title,
+      description,
+      full_description,
+      projectType: parseInt(projectType),
+      privateType
+    })
     .end((err, res) => {
       if (err || res.body == null) {
         dispatch(changedProject(null));
@@ -21,6 +34,7 @@ export const addProject = new_project => dispatch =>
         dispatch(changedProject(res.body));
       }
     });
+};
 export const getProjectAnnotations = (id, type = "json") => dispatch =>
   agent
     .withCredentials()
@@ -111,7 +125,9 @@ export const updateProject = (
   description,
   fullDescription,
   type,
-  sequences
+  sequences,
+  deletedSequences,
+  newSequences
 ) => (dispatch, getState) => {
   if (getState().auth.loggedIn) {
     const req = agent
@@ -123,47 +139,47 @@ export const updateProject = (
       .field("publicType", publicType)
       .field("owner", owner)
       .field("description", description)
-      .field("fullDescription", fullDescription)
-      .field("type", type);
-    const newSequences = sequences.filter(seq => !seq.deleted && seq.new);
-    const deleteSequences = sequences.filter(seq => !seq.new && seq.deleted);
-
+      .field("full_description", fullDescription)
+      .field("projectType", type);
+    const updatedNewSequences = newSequences.slice();
+    const toDeleteIndices = deletedSequences.map((v, i) => {
+      return v.index;
+    });
     let i = 0;
     for (let j = 0; j < newSequences.length; j += 1) {
-      const begin = i;
-      i += newSequences[j].newFile.length;
-      const end = i - 1;
-      newSequences[j].begin = begin;
-      newSequences[j].end = end;
-      for (const file of newSequences[j].newFile) {
-        req.attach("files", file);
-      }
+        req.attach("files", newSequences[j].file);
     }
 
     const newSequencesFiltered = newSequences.map(seq => {
-      return filterObject(seq, [
-        "newName",
-        "newVideo",
-        "newHSplit",
-        "newVSplit",
-        "newBeginS",
-        "newLengthS",
-        "newEveryNFrames",
-        "begin",
-        "end"
-      ]);
-    });
-    const deleteSequencesFiltered = deleteSequences.map(seq => {
-      return seq.originalName;
+      const {
+        name,
+        video,
+        hSplit,
+        vSplit,
+        start,
+        length,
+        everyNFramces,
+        begin,
+        end
+      } = seq;
+      return {
+        name,
+        video,
+        hSplit,
+        vSplit,
+        start,
+        length,
+        everyNFramces,
+        begin,
+        end
+      };
     });
     req.field("new", JSON.stringify(newSequencesFiltered));
-    req.field("delete", JSON.stringify(deleteSequencesFiltered));
+    req.field("delete[]", toDeleteIndices);
     req.end((err, res) => {
       for (const seq of sequences) {
-        if (seq.newFile && typeof seq.newFile == "object") {
-          for (const file of seq.newFile) {
-            window.URL.revokeObjectURL(file.preview);
-          }
+        if (seq.file && typeof seq.file == "object") {
+          window.URL.revokeObjectURL(seq.file.preview);
         }
       }
       dispatch(getProjects());
@@ -171,16 +187,6 @@ export const updateProject = (
   }
 };
 
-const filterObject = (object, keepAttributes) => {
-  const returnObject = {};
-  if (keepAttributes.length === 0) {
-    return object;
-  }
-  for (const attribute of keepAttributes) {
-    returnObject[attribute] = object[attribute];
-  }
-  return returnObject;
-};
 
 export const getProjects = () => (dispatch, getState) => {
   if (getState().auth.loggedIn) {

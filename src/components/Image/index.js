@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Card, Image, Icon, Modal, Header } from "semantic-ui-react";
 import { Stage, Layer, Rect } from "react-konva";
 import "./ImageComponent.scss";
-import LabelBox from "./LabelBox.jsx";
+import LabelBox from "./LabelBox";
 import Img from "./Img.jsx";
 
 class ImageComponent extends Component {

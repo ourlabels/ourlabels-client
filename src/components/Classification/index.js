@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Card, Image, Icon, Header, Button } from "semantic-ui-react";
 import { Draggable, Droppable, DragDropContext } from "react-beautiful-dnd";
-import ZoomComponent from "./ZoomComponent.jsx";
-import TypeComponent from "./TypeComponent.jsx";
-import SequenceComponent from "./SequenceComponent.jsx";
-import IndexComponent from "./IndexComponent.jsx";
+import ZoomComponent from "./Zoom";
+import TypeComponent from "./Type";
+import SequenceComponent from "./Sequence";
+import IndexComponent from "./Idx";
 import "./ClassificationComponent.scss";
 
 class ClassificationComponent extends Component {

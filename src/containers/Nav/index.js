@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { resetAnnotations } from "../../redux-actions/annotations";
-import NavComponent from "../../components/NavComponent.jsx";
+import NavComponent from "../../components/Nav";
 
 class NavContainer extends Component {
   constructor(props) {

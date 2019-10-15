@@ -13,7 +13,7 @@ export const logIn = (username, password) => dispatch =>
   agent
     .post(`${HOSTNAME}/v1/auth/login`)
     .withCredentials()
-    .set("Content-Type", "application/x-www-form-urlencoded")
+    .set("Content-Type", "application/json")
     .send({ username, password })
     .end((err, res) => {
       if (err || res.body == null) {

@@ -7,7 +7,7 @@ export const getLabels = callback => dispatch => {
     .get(`${HOSTNAME}/v1/get/labels`)
     .end((err, res) => {
       if (err || res.body == null) {
-        console.log("Error", err);
+        console.log("Error", err, res.body);
         return;
       } else if (res.body.success) {
         console.log("res body labels: ", res.body);

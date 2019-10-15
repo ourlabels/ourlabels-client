@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import HomeComponent from "../../components/HomeComponent.jsx";
+import HomeComponent from "../../components/Home";
 
 const getLocalDate = date => {
   let realDate = new Date(0);

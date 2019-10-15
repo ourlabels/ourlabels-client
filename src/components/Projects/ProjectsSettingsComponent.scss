@@ -1,4 +1,4 @@
-@import "../base/_variables.scss";
+@import "../../base/_variables.scss";
 .project-settings-container {
     display: flex;
     flex-direction: row;
@@ -61,27 +61,60 @@
 
 .dropzone {
     position: relative;
-    border-radius: 20px;
-    min-height: 100px;
+    border-radius: 8px;
+
 }
 
-.enabled-dropzone {}
-
-.disabled-dropzone {
-    padding: 20px;
-}
 
 .dropzone-text {
     text-align: center;
-    padding: 20px;
-    background: radial-gradient(ellipse at top, rgb(50, 50, 205), transparent), radial-gradient(ellipse at bottom, rgb(50, 50, 205), transparent);
-    border-radius: 20px;
+    background: gray;
+    border-radius: 10px;
     color: white;
+    padding: 10px;
 }
 
 .dropzone-files {
     text-align: center;
     padding: 10px;
+}
+
+.splits {
+    width: 40%;
+    margin-left: 10px;
+}
+.splits-v{
+    background-color: lightgray;
+    border: 1px solid black;
+}
+.splits-h{
+    background-color: white;
+    border: 1px solid black;
+}
+.seq-name {
+    width: 30%;
+    margin-left: 10px;
+}
+.seq-icon {
+    width: 10%;
+    margin-left: 15px;
+}
+.ui.segment.seq-segment {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+}
+.files {
+    width: 20%;
+    margin-left: 10px;
+}
+
+.ui.segment.newseq {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
 }
 
 @media only screen and (min-width: 700px) {

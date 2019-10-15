@@ -15,7 +15,7 @@ import {
 } from "../../redux-actions/project";
 import { getTypes } from "../../redux-actions/types";
 import { getLabels, addLabels } from "../../redux-actions/labels";
-import ProjectsComponent from "../../components/ProjectsComponent.jsx";
+import { ProjectsComponent } from "../../components/Projects";
 
 class ProjectsContainer extends Component {
   constructor(props) {
