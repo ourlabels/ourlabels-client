@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "auth0": "^2.16.0",
+    "auth0": "^2.27.1",
     "autoprefixer": "7.1.6",
     "b": "^2.0.1",
     "babel-cli": "^6.26.0",
